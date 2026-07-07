@@ -1,0 +1,135 @@
+{
+  "mission": {
+    "statement": "At the SNF Agora Institute's Center for Economy and Society, we reinvigorate core debates about political economy. As scholars, teachers, and community-builders, our ideas move freely across disciplinary and ideological boundaries. Historically, fixed models of political economy have obscured potential avenues for innovation. Here, through generative disagreement and productive discourse, we explore those hidden opportunities and develop actionable solutions to address pressing global challenges.",
+    "funding_line": "The Center for Economy and Society is one of a number of inter-related initiatives funded by the Hewlett Foundation and Omidyar Network.",
+    "pillars": [
+      {
+        "name": "Discovery",
+        "subtitle": "Uncovering Points of Convergence",
+        "description": "By reframing conversations and reorienting debates along different axes, we aim to reopen static debates in political economy, make disagreement more fruitful, and discover unexpected points of convergence."
+      },
+      {
+        "name": "Education",
+        "subtitle": "Cultivating Leaders for Tomorrow",
+        "description": "Our goal is to cultivate a new generation of students who are poised to tackle the complex political and economic issues of our era, through deep reading, rigorous research methods, and communal engagement."
+      },
+      {
+        "name": "Connection",
+        "subtitle": "Building Bridges, Shaping Futures",
+        "description": "As a professional network and research center, we serve as an incubator of ideas and a hub for exchanging ideas across sectors and channels."
+      }
+    ]
+  },
+  "focus_areas": [
+    {
+      "title": "AI and the Economy",
+      "description": "Delving into how artificial intelligence is redefining economic landscapes.",
+      "scholar_ids": ["henry-farrell", "louis-hyman", "angus-burgin"]
+    },
+    {
+      "title": "Economic Security",
+      "description": "Examining the foundations of financial stability in modern society.",
+      "scholar_ids": ["henry-farrell", "louis-hyman"]
+    },
+    {
+      "title": "The New Abundance Economics Agenda",
+      "description": "Charting a new course for prosperity in today's world.",
+      "scholar_ids": ["steven-teles", "monica-prasad"]
+    },
+    {
+      "title": "Innovations in the Infrastructures of Care",
+      "description": "Reimagining support systems for the 21st century.",
+      "scholar_ids": ["steven-teles", "glory-m-liu"]
+    },
+    {
+      "title": "U.S.-China and the World",
+      "description": "Navigating the complexities of global economic leadership.",
+      "scholar_ids": ["yuen-yuen-ang", "louis-hyman"]
+    },
+    {
+      "title": "Poverty and Development",
+      "description": "Tackling the root causes of poverty with fresh insights.",
+      "scholar_ids": ["yuen-yuen-ang", "monica-prasad"]
+    },
+    {
+      "title": "The Economics of the Workplace",
+      "description": "Understanding the evolving dynamics of our workplaces.",
+      "scholar_ids": ["simon-halliday", "louis-hyman"]
+    },
+    {
+      "title": "Political Economies of Exclusion",
+      "description": "Addressing the barriers that divide us.",
+      "scholar_ids": ["yuen-yuen-ang", "glory-m-liu"]
+    }
+  ],
+  "programs": [
+    {
+      "name": "BA in Moral and Political Economy",
+      "description": "A new undergraduate major at Johns Hopkins that teaches students to think about economic problems in their moral, social, and political contexts. It is Johns Hopkins' only selective major in the humanities and social sciences, and requires all students to complete senior honors theses. Contact: mpe.dus@jh.edu.",
+      "url": null
+    },
+    {
+      "name": "enCOREage",
+      "description": "A collaboration among CORE Econ, the Center for Advanced Study in the Behavioral Sciences (CASBS) at Stanford, and Honor Education, creating a free, open-access introductory economics e-textbook, \"Understanding the Economy,\" addressing inequality, innovation, climate change, and the future of work.",
+      "url": null
+    }
+  ],
+  "activities": [
+    {
+      "name": "District Dinners",
+      "description": "Monthly salon-style dinner conversations in DC bringing together journalists, researchers, think-tankers, and policymakers across three thematic areas: economic statecraft; American political economy; and US-China in a global perspective."
+    },
+    {
+      "name": "Scholarship and Journalism",
+      "description": "Alongside commissioning traditional academic papers for peer-reviewed journals, CES prioritizes sharing knowledge with major media outlets such as The Economist, The New York Times, The Wall Street Journal, and C-SPAN."
+    },
+    {
+      "name": "Visiting Fellowships",
+      "description": "Each year, CES extends visiting fellowships to several DC-area journalists whose investigative interests align with its mission, strengthening ties between research and reporting."
+    }
+  ],
+  "opportunities": [
+    {
+      "name": "Postdoctoral Fellowships in Moral and Political Economy",
+      "description": "Two or more three-year fellowships. Fellows teach two sections/seminars in year one and three in years two and three, advise senior thesis students, and remain in residence in the Baltimore-Washington region."
+    },
+    {
+      "name": "Research Assistantships",
+      "description": "Paid academic-year opportunities matching Moral & Political Economy majors with CES faculty and fellows."
+    },
+    {
+      "name": "Undergraduate Summer Internship Program",
+      "description": "Full-time summer internships placing students with leading international development organizations."
+    }
+  ],
+  "about": {
+    "established": "2022",
+    "director": "Louis Hyman",
+    "associate_director": "Simon Halliday",
+    "advisory_board_chair": "Margaret Levi (Stanford)",
+    "funding_sources": [
+      "William and Flora Hewlett Foundation ($10 million)",
+      "Omidyar Network ($10 million, shared)",
+      "Johns Hopkins University",
+      "Stavros Niarchos Foundation (via SNF Agora Institute endowment)"
+    ],
+    "connected_networks": [
+      "SNF Agora Institute at Johns Hopkins University",
+      "Johns Hopkins Data Science and AI Institute",
+      "JHU Krieger School of Arts and Sciences"
+    ],
+    "parent_institute": "Housed within the SNF Agora Institute at Johns Hopkins University, 3100 Wyman Park Dr, Baltimore, MD 21218.",
+    "related_resources": [
+      {
+        "title": "BA in Moral and Political Economy",
+        "description": "Program prepares students to tackle challenges of a complex world",
+        "url": null
+      },
+      {
+        "title": "Numbers and Nerds: A Crash Course in Capitalism",
+        "description": "Related resource linked from the current CES page — verify what this is (podcast/book/course) during research.",
+        "url": null
+      }
+    ]
+  }
+}
