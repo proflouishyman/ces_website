@@ -1,45 +1,58 @@
 // Center on Economy and Society — app.js
 // Vanilla JS, no build step, no framework. Fetches data/people.json and
-// data/site-content.json (relative paths) and renders every data-driven
-// section of index.html. Person detail is hash-routed: #/people/{id}.
+// data/site-content.json (relative paths) and renders whichever data-driven
+// section(s) are present on the current page. Each real HTML page includes
+// this same script; render functions no-op (via a root-element existence
+// check) when their target section isn't on the page. Person detail is a
+// real page (person.html) driven by the ?id= query parameter — there is no
+// hash routing.
 
 let people = [];
 let siteContent = null;
+let mediaContent = null;
 let activeRoleFilter = 'all';
 
 // ── DATA LOAD ────────────────────────────────────────────────
 
 async function loadData() {
   try {
-    const [pRes, sRes] = await Promise.all([
+    const [pRes, sRes, mRes] = await Promise.all([
       fetch('data/people.json'),
       fetch('data/site-content.json'),
+      fetch('data/media.json'),
     ]);
     people = await pRes.json();
     siteContent = await sRes.json();
+    mediaContent = await mRes.json();
   } catch (e) {
     console.error('Could not load CES site data:', e);
     people = people || [];
     siteContent = siteContent || null;
+    mediaContent = mediaContent || null;
   }
   init();
 }
 
 function init() {
-  // Safety net for the scroll-reveal no-JS fallback (see index.html's inline
+  // Safety net for the scroll-reveal no-JS fallback (see each page's inline
   // script + css/style.css .js-reveal rules): if any builder below throws
   // partway through, fall back to fully-visible rather than leaving cards
   // that already got their opacity:0 starting state stuck invisible forever.
   try {
+    // Each builder checks for its own root element and no-ops if absent, so
+    // it's safe to call all of them on every page — only the ones matching
+    // the current page's markup actually render anything.
     buildPeopleGrid();
+    buildPersonDetail();
     buildPublicationsFeed();
     buildFocusAreas();
+    buildFocusAreasTeaser();
     buildPrograms();
     buildActivities();
     buildOpportunities();
     buildAbout();
+    buildMedia();
     setupEventListeners();
-    handleHash();
     initScrollReveal();
   } catch (e) {
     console.error('CES site init failed partway through; disabling scroll-reveal so content stays visible:', e);
@@ -48,21 +61,6 @@ function init() {
       .forEach(el => el.classList.add('is-in'));
   }
 }
-
-// ── ROUTING ──────────────────────────────────────────────────
-
-// Opens a person detail view if the page loaded with a #/people/{id} hash.
-function handleHash() {
-  const hash = window.location.hash; // e.g. "#/people/louis-hyman"
-  const match = hash.match(/^#\/people\/(.+)$/);
-  if (match) {
-    openPersonDetail(decodeURIComponent(match[1]));
-  } else {
-    closePersonDetail();
-  }
-}
-
-window.addEventListener('hashchange', handleHash);
 
 // ── HELPERS ──────────────────────────────────────────────────
 
@@ -76,6 +74,11 @@ function escHtml(str) {
 
 function escAttr(str) {
   return String(str == null ? '' : str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Builds a relative link to a scholar's detail page: person.html?id={id}.
+function personLink(id) {
+  return `person.html?id=${encodeURIComponent(id)}`;
 }
 
 // Deterministic avatar tile color per scholar id, per the design contract:
@@ -120,11 +123,7 @@ function workCue(person) {
   return '';
 }
 
-function personDeepLink(id) {
-  return `${window.location.origin}${window.location.pathname}#/people/${encodeURIComponent(id)}`;
-}
-
-// ── PEOPLE GRID ──────────────────────────────────────────────
+// ── PEOPLE GRID (people.html) ────────────────────────────────
 
 function buildPeopleGrid() {
   const grid = document.getElementById('person-grid');
@@ -141,7 +140,7 @@ function buildPeopleGrid() {
   }
 
   grid.innerHTML = filtered.map(p => `
-    <a class="person-card" href="#/people/${encodeURIComponent(p.id)}" data-id="${escAttr(p.id)}">
+    <a class="person-card" href="${personLink(p.id)}" data-id="${escAttr(p.id)}">
       <div class="person-card__media">
         ${avatarHtml(p, 'avatar--md')}
       </div>
@@ -165,17 +164,32 @@ function setRoleFilter(role) {
   buildPeopleGrid();
 }
 
-// ── PERSON DETAIL ────────────────────────────────────────────
+// ── PERSON DETAIL (person.html) ──────────────────────────────
 
-function openPersonDetail(id) {
+// Renders the scholar detail view into #person-detail-root on person.html,
+// driven entirely by the ?id= query parameter — never a per-person static
+// file, so adding/removing/editing a scholar only ever requires editing
+// data/people.json.
+function buildPersonDetail() {
   const root = document.getElementById('person-detail-root');
   if (!root) return;
+
+  const id = new URLSearchParams(window.location.search).get('id');
   const p = people.find(x => x.id === id);
+
   if (!p) {
-    root.innerHTML = '';
-    root.classList.remove('is-open');
+    root.innerHTML = `
+      <div class="container" style="padding-block: var(--band-pad);">
+        <p class="page-head__eyebrow eyebrow eyebrow--teal">Scholar not found</p>
+        <h2 class="page-head__title">We couldn't find that scholar</h2>
+        <p class="page-head__intro">They may have moved or the link may be out of date.</p>
+        <a class="btn btn--pill" href="people.html">Back to all scholars<span class="btn__arrow">→</span></a>
+      </div>
+    `;
     return;
   }
+
+  document.title = `${p.name} | Center on Economy and Society`;
 
   const focusTags = (p.topics || []).map(t => `<span class="tag tag--focus">${escHtml(t)}</span>`).join('');
 
@@ -186,7 +200,7 @@ function openPersonDetail(id) {
   ].filter(Boolean).join('');
 
   root.innerHTML = `
-    <main class="person-profile">
+    <div class="person-profile">
       <section class="person-hero">
         <div class="person-hero__media">
           ${avatarHtml(p, 'avatar--lg')}
@@ -203,21 +217,10 @@ function openPersonDetail(id) {
         ${workSectionHtml(p)}
         ${personAsideHtml(p)}
       </div>
-    </main>
+    </div>
   `;
 
-  root.classList.add('is-open');
   observeRevealTargets(root.querySelectorAll('.work-item'));
-
-  // Scroll the detail view into view so a deep link lands somewhere visible.
-  root.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function closePersonDetail() {
-  const root = document.getElementById('person-detail-root');
-  if (!root) return;
-  root.innerHTML = '';
-  root.classList.remove('is-open');
 }
 
 function roleLabel(role) {
@@ -285,10 +288,10 @@ function workSectionHtml(p) {
   `;
 }
 
-const WORK_BADGE_LABEL = { book: 'Book', article: 'Article', newsletter: 'Newsletter', link: 'Profile' };
+const WORK_BADGE_LABEL = { book: 'Book', article: 'Article', newsletter: 'Newsletter', link: 'Profile', talk: 'Talk' };
 
 function workItemHtml(item, type) {
-  const modifier = ['book', 'article', 'newsletter'].includes(type) ? type : 'article';
+  const modifier = ['book', 'article', 'newsletter', 'talk'].includes(type) ? type : 'article';
   const badge = WORK_BADGE_LABEL[modifier] || 'Article';
   const meta = [item.venue, item.year].filter(Boolean).join(' · ');
   const cover = item.cover ? `<img class="work-item__cover" src="${escAttr(item.cover)}" alt="" loading="lazy">` : '';
@@ -306,7 +309,7 @@ function workItemHtml(item, type) {
   `;
 }
 
-// Secondary rail: short bio + focus areas + connected networks.
+// Secondary rail: short bio + focus areas.
 function personAsideHtml(p) {
   const topics = (p.topics || []);
   return `
@@ -329,7 +332,7 @@ function personAsideHtml(p) {
   `;
 }
 
-// ── AGGREGATED PUBLICATIONS FEED (home) ─────────────────────
+// ── AGGREGATED PUBLICATIONS FEED (index.html "Recent work" teaser) ──
 
 function buildPublicationsFeed() {
   const track = document.getElementById('pub-grid-track');
@@ -351,7 +354,7 @@ function buildPublicationsFeed() {
       const modifier = ['book', 'article', 'newsletter'].includes(pub.type) ? pub.type : 'article';
       const badge = WORK_BADGE_LABEL[modifier] || 'Article';
       return `
-        <a class="pub-card work-item--${modifier}" href="#/people/${encodeURIComponent(pub.personId)}">
+        <a class="pub-card work-item--${modifier}" href="${personLink(pub.personId)}">
           <span class="pub-card__badge">${escHtml(badge)}</span>
           <h3 class="pub-card__title">${escHtml(pub.title)}</h3>
           <p class="pub-card__author">${escHtml(pub.personName)}</p>
@@ -366,7 +369,7 @@ function buildPublicationsFeed() {
       .filter(p => p.personal_website || p.directory_url)
       .slice(0, 5);
     cardsHtml = linkRich.map(p => `
-      <a class="pub-card work-item--link" href="${escAttr(p.personal_website || p.directory_url)}" target="_blank" rel="noopener">
+      <a class="pub-card work-item--link" href="${personLink(p.id)}">
         <span class="pub-card__badge">Profile</span>
         <h3 class="pub-card__title">${escHtml(p.name)}</h3>
         <p class="pub-card__author">${escHtml(p.institution || '')}</p>
@@ -379,37 +382,57 @@ function buildPublicationsFeed() {
   observeRevealTargets(track.querySelectorAll('.pub-card'));
 }
 
-// ── FOCUS AREAS ──────────────────────────────────────────────
+// ── FOCUS AREAS (focus-areas.html — full grid) ──────────────
 
 function buildFocusAreas() {
   const grid = document.getElementById('focus-grid');
   if (!grid || !siteContent) return;
+  grid.removeAttribute('data-loading');
 
   const areas = siteContent.focus_areas || [];
-  grid.innerHTML = areas.map((area, i) => {
-    const scholars = (area.scholar_ids || [])
-      .map(id => people.find(p => p.id === id))
-      .filter(Boolean);
-    const shown = scholars.slice(0, 4);
-    const extra = scholars.length - shown.length;
-    return `
-      <a class="focus-card" href="#/people" data-focus-index="${i}">
-        <span class="focus-card__index">${String(i + 1).padStart(2, '0')}</span>
-        <h3 class="focus-card__title">${escHtml(area.title)}</h3>
-        <p class="focus-card__desc">${escHtml(area.description || '')}</p>
-        <div class="focus-card__scholars">
-          ${shown.map(s => avatarHtml(s, 'avatar--xs avatar--tile')).join('')}
-          ${extra > 0 ? `<span class="focus-card__scholars-more">+${extra}</span>` : ''}
-        </div>
-        <span class="focus-card__cue">→</span>
-      </a>
-    `;
-  }).join('');
+  grid.innerHTML = areas.map((area, i) => focusCardHtml(area, i)).join('');
 
   observeRevealTargets(grid.querySelectorAll('.focus-card'));
 }
 
-// ── PROGRAMS / ACTIVITIES / OPPORTUNITIES ───────────────────
+// ── FOCUS AREAS TEASER (index.html — compact preview) ───────
+
+function buildFocusAreasTeaser() {
+  const grid = document.getElementById('focus-grid-teaser');
+  if (!grid || !siteContent) return;
+  grid.removeAttribute('data-loading');
+
+  const areas = (siteContent.focus_areas || []).slice(0, 3);
+  grid.innerHTML = areas.map((area, i) => focusCardHtml(area, i)).join('');
+
+  observeRevealTargets(grid.querySelectorAll('.focus-card'));
+}
+
+// Shared focus-card renderer used by both the full grid (focus-areas.html)
+// and the home teaser (index.html) — scholar chips link to person.html?id=.
+// Rendered as a <div> (not <a>) because the scholar avatars are themselves
+// links and nested <a> elements are invalid HTML; the card carries its own
+// explicit cue link instead of being one big anchor.
+function focusCardHtml(area, i) {
+  const scholars = (area.scholar_ids || [])
+    .map(id => people.find(p => p.id === id))
+    .filter(Boolean);
+  const shown = scholars.slice(0, 4);
+  const extra = scholars.length - shown.length;
+  return `
+    <div class="focus-card" data-focus-index="${i}">
+      <h3 class="focus-card__title">${escHtml(area.title)}</h3>
+      <p class="focus-card__desc">${escHtml(area.description || '')}</p>
+      <div class="focus-card__scholars">
+        ${shown.map(s => `<a href="${personLink(s.id)}">${avatarHtml(s, 'avatar--xs avatar--tile')}</a>`).join('')}
+        ${extra > 0 ? `<span class="focus-card__scholars-more">+${extra}</span>` : ''}
+      </div>
+      <a class="focus-card__cue" href="people.html" aria-label="View scholars in ${escAttr(area.title)}">→</a>
+    </div>
+  `;
+}
+
+// ── PROGRAMS / ACTIVITIES / OPPORTUNITIES (programs.html) ───
 
 function activityCardHtml(item, modifier, eyebrowLabel) {
   return `
@@ -449,7 +472,7 @@ function buildOpportunities() {
   observeRevealTargets(grid.querySelectorAll('.activity-card'));
 }
 
-// ── ABOUT ────────────────────────────────────────────────────
+// ── ABOUT (about.html) ───────────────────────────────────────
 
 function buildAbout() {
   const el = document.getElementById('about-meta');
@@ -488,6 +511,80 @@ function buildAbout() {
       </div>
     ` : ''}
   `;
+}
+
+// ── MEDIA (media.html — talks & appearances, newsletters) ────
+
+// Renders a single row in the "Talks & Appearances" list. Reuses the
+// .work-item card pattern (see workItemHtml) but, unlike a person's own
+// work-section, each row spans scholars, so the scholar's name is shown as
+// a link back to their person.html?id= page rather than assumed from page
+// context.
+function talkItemHtml(talk) {
+  const scholar = people.find(p => p.id === talk.scholar_id);
+  const scholarName = scholar ? scholar.name : talk.scholar_id;
+  const meta = [talk.venue].filter(Boolean).join(' · ');
+  return `
+    <div class="work-item work-item--talk">
+      <span class="work-item__badge">Talk</span>
+      <div class="work-item__content">
+        <h3 class="work-item__title"><a href="${escAttr(talk.url)}" target="_blank" rel="noopener">${escHtml(talk.title)}</a></h3>
+        <p class="work-item__meta">
+          ${scholar ? `<a href="${personLink(scholar.id)}">${escHtml(scholarName)}</a>` : escHtml(scholarName)}
+          ${meta ? ` · ${escHtml(meta)}` : ''}
+        </p>
+      </div>
+      <a class="work-item__cue" href="${escAttr(talk.url)}" target="_blank" rel="noopener" aria-label="Watch ${escAttr(talk.title)}">↗</a>
+    </div>
+  `;
+}
+
+// Renders a single row in the "Newsletters" list — same pattern, linking
+// both to the newsletter itself and back to the scholar's profile.
+function newsletterItemHtml(nl) {
+  const scholar = people.find(p => p.id === nl.scholar_id);
+  const scholarName = scholar ? scholar.name : nl.scholar_id;
+  return `
+    <div class="work-item work-item--newsletter">
+      <span class="work-item__badge">Newsletter</span>
+      <div class="work-item__content">
+        <h3 class="work-item__title"><a href="${escAttr(nl.url)}" target="_blank" rel="noopener">${escHtml(nl.name)}</a></h3>
+        <p class="work-item__meta">
+          ${scholar ? `<a href="${personLink(scholar.id)}">${escHtml(scholarName)}</a>` : escHtml(scholarName)}
+        </p>
+      </div>
+      <a class="work-item__cue" href="${escAttr(nl.url)}" target="_blank" rel="noopener" aria-label="Read ${escAttr(nl.name)}">↗</a>
+    </div>
+  `;
+}
+
+// Builds both media.html sections from data/media.json. Kept flexible per
+// the site owner's "edit JSON, not code" principle: adding a new talk or
+// newsletter later only requires a new object in data/media.json, in the
+// same shape as the existing entries.
+function buildMedia() {
+  const talksList = document.getElementById('talks-list');
+  const newslettersList = document.getElementById('newsletters-list');
+  if (!talksList && !newslettersList) return;
+  if (!mediaContent) return;
+
+  if (talksList) {
+    talksList.removeAttribute('data-loading');
+    const talks = mediaContent.talks || [];
+    talksList.innerHTML = talks.length
+      ? talks.map(talkItemHtml).join('')
+      : '<p class="empty-state">No talks or appearances yet.</p>';
+    observeRevealTargets(talksList.querySelectorAll('.work-item'));
+  }
+
+  if (newslettersList) {
+    newslettersList.removeAttribute('data-loading');
+    const newsletters = mediaContent.newsletters || [];
+    newslettersList.innerHTML = newsletters.length
+      ? newsletters.map(newsletterItemHtml).join('')
+      : '<p class="empty-state">No newsletters yet.</p>';
+    observeRevealTargets(newslettersList.querySelectorAll('.work-item'));
+  }
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────────

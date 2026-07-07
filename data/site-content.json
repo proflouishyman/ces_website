@@ -22,44 +22,24 @@
   },
   "focus_areas": [
     {
-      "title": "AI and the Economy",
-      "description": "Delving into how artificial intelligence is redefining economic landscapes.",
-      "scholar_ids": ["henry-farrell", "louis-hyman", "angus-burgin"]
+      "title": "Progress & Abundance",
+      "description": "As debates over growth, innovation, and state capacity move to the center of political economy, we ask how societies actually build shared prosperity — and what has been holding them back.",
+      "scholar_ids": ["steven-teles", "monica-prasad", "glory-m-liu", "simon-halliday"]
     },
     {
-      "title": "Economic Security",
-      "description": "Examining the foundations of financial stability in modern society.",
-      "scholar_ids": ["henry-farrell", "louis-hyman"]
+      "title": "Artificial Intelligence",
+      "description": "Artificial intelligence is reshaping markets, work, and the distribution of economic power faster than our institutions can respond — and the terms of that transformation are still being set.",
+      "scholar_ids": ["henry-farrell", "louis-hyman", "angus-burgin", "john-handel", "simon-halliday"]
     },
     {
-      "title": "The New Abundance Economics Agenda",
-      "description": "Charting a new course for prosperity in today's world.",
-      "scholar_ids": ["steven-teles", "monica-prasad"]
+      "title": "Security",
+      "description": "Economic security, financial stability, and great-power competition have collapsed the old line between economics and geopolitics, making the economy itself an instrument of statecraft.",
+      "scholar_ids": ["henry-farrell", "monica-prasad", "louis-hyman", "yuen-yuen-ang", "john-handel"]
     },
     {
-      "title": "Innovations in the Infrastructures of Care",
-      "description": "Reimagining support systems for the 21st century.",
-      "scholar_ids": ["steven-teles", "glory-m-liu"]
-    },
-    {
-      "title": "U.S.-China and the World",
-      "description": "Navigating the complexities of global economic leadership.",
-      "scholar_ids": ["yuen-yuen-ang", "louis-hyman"]
-    },
-    {
-      "title": "Poverty and Development",
-      "description": "Tackling the root causes of poverty with fresh insights.",
-      "scholar_ids": ["yuen-yuen-ang", "monica-prasad"]
-    },
-    {
-      "title": "The Economics of the Workplace",
-      "description": "Understanding the evolving dynamics of our workplaces.",
-      "scholar_ids": ["simon-halliday", "louis-hyman"]
-    },
-    {
-      "title": "Political Economies of Exclusion",
-      "description": "Addressing the barriers that divide us.",
-      "scholar_ids": ["yuen-yuen-ang", "glory-m-liu"]
+      "title": "Work & Care",
+      "description": "Who the economy serves is again a live political question — and answering it means confronting how work, distribution, and exclusion shape people's economic lives.",
+      "scholar_ids": ["simon-halliday", "louis-hyman", "yuen-yuen-ang", "monica-prasad", "glory-m-liu"]
     }
   ],
   "programs": [

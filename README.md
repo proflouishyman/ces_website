@@ -6,6 +6,28 @@ A static site (plain HTML/CSS/JS, no build step) for the CES at the SNF Agora In
 
 See `DESIGN_SPEC.md` for the design system and component contract (CSS classes, layout rules, etc.) — that document is for anyone touching the visual design or JS. This section is for content-only edits.
 
+## Site structure & routing
+
+The site is seven real, separately-loadable HTML pages — **not** one long scrolling page with hash-fragment navigation:
+
+- `index.html` — Home (hero, recent-work teaser, mission, Research Pillars teaser)
+- `people.html` — Full scholar roster with role filters
+- `person.html?id={id}` — Scholar detail page, e.g. `person.html?id=louis-hyman`
+- `focus-areas.html` — Full Research Pillars grid (nav label "Research Pillars"; the filename stays `focus-areas.html` from the earlier 8-area version to avoid churn)
+- `programs.html` — Programs, ongoing activities, and opportunities
+- `media.html` — Talks & Appearances and Newsletters from our scholars
+- `about.html` — Mission, funding, advisory board, connected networks
+
+Scholar detail pages are **query-parameter routed, not per-person static files**: `person.html` reads `id` from `new URLSearchParams(location.search).get('id')`, looks that up in the already-fetched `data/people.json` array, and renders the profile client-side. There is no `#/people/{id}` hash route anymore (that was the old single-page scheme) — link to a scholar with `person.html?id=jane-doe`. This is why adding, removing, or editing a scholar only ever requires editing `data/people.json`: no new HTML file is ever created per person.
+
+Nav links across all seven pages are plain relative `<a href="people.html">`-style links (no leading slash, since the site is hosted at a GitHub Pages subpath) — there is no client-side router. `js/app.js` is shared by every page; it detects which page it's on by checking for that page's root element (e.g. `#person-grid` on `people.html`, `#person-detail-root` on `person.html`, `#talks-list`/`#newsletters-list` on `media.html`) and only runs the render function(s) for elements that exist on the current page.
+
+**Maintenance tradeoff — header/footer are copy-pasted, not templated:** because this is a plain static site with no build step, the shared header and footer markup is duplicated verbatim across all seven HTML files rather than templated/included. If you change the nav links, the header brand, or the footer columns, you must make the same edit in all seven files (`index.html`, `people.html`, `person.html`, `focus-areas.html`, `programs.html`, `media.html`, `about.html`). This is a deliberate simplicity-over-DRY tradeoff for a no-build-tool site; if the page count grows much further, introducing a static-site generator (or a tiny build step that inlines a shared partial) would be worth revisiting.
+
+## Updating Media (talks & newsletters)
+
+Talks/appearances and newsletters on `media.html` live in **`data/media.json`**, an object with two flat arrays: `talks` (`{ scholar_id, title, venue, url }`) and `newsletters` (`{ scholar_id, name, url }`). `venue` is optional. `scholar_id` must match an `id` in `data/people.json` so the item can link back to that scholar's profile — adding a new talk or newsletter is a JSON-only edit, no HTML/JS/CSS change needed. A scholar's `substack` field in `data/people.json` (used on their own `person.html` profile) is separate from the `newsletters` list here; keep both in sync if a scholar's newsletter changes.
+
 ## Updating the People Roster
 
 All scholar/staff info lives in **`data/people.json`**. It's a JSON list — one object per person. You do not need to touch any HTML, CSS, or JS file to add, remove, or edit a person; the site rebuilds itself from this file automatically the next time the page loads.
@@ -18,7 +40,7 @@ All scholar/staff info lives in **`data/people.json`**. It's a JSON list — one
 2. Fill in the fields:
 
    **Required:**
-   - `id` — a short, unique, URL-safe slug, lowercase with hyphens (e.g. `"jane-doe"`). This becomes part of the person's page link (`#/people/jane-doe`), so once published, avoid changing it.
+   - `id` — a short, unique, URL-safe slug, lowercase with hyphens (e.g. `"jane-doe"`). This becomes part of the person's page link (`person.html?id=jane-doe`), so once published, avoid changing it.
    - `name` — full display name.
    - `title` — their role/title as it should appear on the site.
    - `role` — must be exactly one of: `"leadership"`, `"postdoc"`, or `"visiting"`. This controls which filter group and section they show up in (Leadership / Postdoctoral Fellows / Visiting Fellows). Any other value will cause them to not appear when a filter is selected.

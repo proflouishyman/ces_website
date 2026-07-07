@@ -1,0 +1,103 @@
+{
+  "talks": [
+    {
+      "scholar_id": "louis-hyman",
+      "title": "The Workers of Silicon Valley",
+      "venue": "Google",
+      "url": "https://youtube.com/watch?v=uakN9DjAxFs"
+    },
+    {
+      "scholar_id": "louis-hyman",
+      "title": "The History of Climate Catastrophe and the Future of Work",
+      "venue": "CASBS / Stanford",
+      "url": "https://youtube.com/watch?v=LbodGePDE7U"
+    },
+    {
+      "scholar_id": "louis-hyman",
+      "title": "Gigged and Temped",
+      "venue": "Rutgers Heldrich Center",
+      "url": "https://youtube.com/watch?v=DC5-S8gdIco"
+    },
+    {
+      "scholar_id": "louis-hyman",
+      "title": "Is My Employer an Algorithm?",
+      "venue": "Cornell ILR",
+      "url": "https://youtube.com/watch?v=U1kaSGmA4uQ"
+    },
+    {
+      "scholar_id": "louis-hyman",
+      "title": "The Uses of AI for Writing Economic History",
+      "venue": "with Matt Jones",
+      "url": "https://youtube.com/watch?v=ZQgaQoVFtGo"
+    },
+    {
+      "scholar_id": "yuen-yuen-ang",
+      "title": "China's Gilded Age: A book talk",
+      "venue": null,
+      "url": "https://youtube.com/watch?v=9-cQ_B65aOQ"
+    },
+    {
+      "scholar_id": "yuen-yuen-ang",
+      "title": "Deng's Hidden Political Revolution",
+      "venue": "Ep. 2, \"The Economics of China\" series",
+      "url": "https://youtube.com/watch?v=Qg7MEWXyMmo"
+    },
+    {
+      "scholar_id": "yuen-yuen-ang",
+      "title": "Summer Davos interview on the Belt and Road Initiative",
+      "venue": null,
+      "url": "https://youtube.com/watch?v=fZB-1tkGSiI"
+    },
+    {
+      "scholar_id": "henry-farrell",
+      "title": "Ezra Klein Show segment",
+      "venue": null,
+      "url": "https://youtube.com/playlist?list=PLv3pYVbcWueYsHwSHnpGTxEMg_T68auHE"
+    },
+    {
+      "scholar_id": "henry-farrell",
+      "title": "Mindscape 148",
+      "venue": null,
+      "url": "https://youtube.com/watch?v=CDwVZgywk-M"
+    },
+    {
+      "scholar_id": "henry-farrell",
+      "title": "Foreign Affairs interview",
+      "venue": "with Abraham Newman",
+      "url": "https://youtube.com/watch?v=F_NqZJJg26M"
+    },
+    {
+      "scholar_id": "steven-teles",
+      "title": "Steven Teles on Abundance",
+      "venue": null,
+      "url": "https://youtube.com/watch?v=PkYzM_4gyKQ"
+    }
+  ],
+  "newsletters": [
+    {
+      "scholar_id": "louis-hyman",
+      "name": "Computational History",
+      "url": "https://computationalhistory.substack.com/"
+    },
+    {
+      "scholar_id": "yuen-yuen-ang",
+      "name": "Polytunity",
+      "url": "https://polytunity.substack.com/"
+    },
+    {
+      "scholar_id": "henry-farrell",
+      "name": "Programmable Mutter",
+      "url": "https://www.programmablemutter.com/"
+    },
+    {
+      "scholar_id": "john-handel",
+      "name": "Intellectual Arbitrage",
+      "url": "https://johnhandel.substack.com"
+    },
+    {
+      "scholar_id": "steven-teles",
+      "name": "Modern Power",
+      "url": "https://substack.com/@steventeles"
+    }
+  ]
+}
