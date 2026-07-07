@@ -322,6 +322,27 @@ button {
    6. Site Header / Masthead
    -------------------------------------------------------------------------- */
 
+/* Accessibility skip-link: off-screen until keyboard-focused, then jumps
+   above the header so keyboard/screen-reader users can bypass the nav. */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 0;
+  z-index: 200;
+  background: var(--navy);
+  color: var(--white);
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-label);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-radius: 0 0 var(--radius-card) 0;
+  transition: top 0.15s var(--ease);
+}
+.skip-link:focus {
+  top: 0;
+}
+
 .site-header {
   position: sticky;
   top: 0;
