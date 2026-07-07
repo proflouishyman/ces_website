@@ -620,7 +620,10 @@
         "url": "https://www.niskanencenter.org/wp-content/uploads/2021/09/Cost-Disease-Socialism.pdf"
       }
     ],
-    "substack": null,
+    "substack": {
+      "name": "Modern Power",
+      "url": "https://substack.com/@steventeles"
+    },
     "media": [
       {
         "outlet": "The New York Times (The Ezra Klein Show)",

@@ -122,16 +122,6 @@ button {
 .eyebrow--sky   { color: var(--skyblue); }
 .eyebrow--navy  { color: var(--navy); }
 
-/* Folio index — the recurring CES masthead device: "NN / LABEL" */
-.folio {
-  font-family: var(--font-label);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 500;
-  color: var(--blue);
-  opacity: 0.6;
-}
-
 .tag {
   display: inline-block;
   font-family: var(--font-body);
@@ -171,7 +161,6 @@ button {
 .page-head {
   padding-block: var(--band-pad) calc(var(--band-pad) * 0.5);
 }
-.page-head__folio { display: block; margin-bottom: 1.5rem; }
 .page-head__eyebrow { display: block; margin-bottom: 0.75rem; }
 .page-head__title {
   font-family: var(--font-display);
@@ -377,15 +366,6 @@ button {
   color: var(--navy);
 }
 
-.site-header__folio {
-  font-family: var(--font-label);
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--blue);
-  opacity: 0.55;
-}
-
 .site-header__nav {
   display: flex;
   align-items: center;
@@ -474,21 +454,6 @@ button {
   z-index: 0;
 }
 
-.hero__folio {
-  position: relative;
-  display: block;
-  font-size: clamp(3.5rem, 12vw, 9rem);
-  font-weight: 500;
-  color: var(--white);
-  opacity: 0.07;
-  white-space: nowrap;
-  margin-left: calc(-1 * var(--gutter));
-  padding-left: var(--gutter);
-  margin-bottom: -2rem;
-  z-index: 1;
-  pointer-events: none;
-}
-
 .hero__inner {
   position: relative;
   z-index: 1;
@@ -549,16 +514,6 @@ button {
 .section-divider--teal {
   background: var(--darkteal);
   color: var(--white);
-}
-
-.section-divider__folio {
-  display: block;
-  margin-bottom: 1.5rem;
-}
-.section-divider--navy .section-divider__folio,
-.section-divider--teal .section-divider__folio {
-  color: var(--white);
-  opacity: 0.5;
 }
 
 .section-divider__inner {
@@ -645,15 +600,6 @@ button {
 .focus-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0,27,68,.06), 0 20px 36px rgba(0,27,68,.12);
-}
-
-.focus-card__index {
-  font-family: var(--font-label);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--teal);
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
 }
 
 .focus-card__title {
@@ -882,6 +828,14 @@ button {
   flex-direction: column;
 }
 
+/* media.html renders .work-list directly under a .page-head, without the
+   .work-section wrapper's accent rule/padding (that wrapper is specific to
+   a scholar's own profile) — add matching bottom padding so the list isn't
+   flush against the next section. */
+.media-section .work-list {
+  padding-bottom: var(--band-pad);
+}
+
 .work-item {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -917,6 +871,7 @@ button {
 .work-item--article .work-item__badge    { background: var(--blue); }
 .work-item--newsletter .work-item__badge { background: var(--teal); color: var(--navy); }
 .work-item--link .work-item__badge       { background: var(--skyblue); color: var(--navy); }
+.work-item--talk .work-item__badge       { background: var(--darkteal); }
 
 .work-item__content { min-width: 0; }
 
@@ -1077,11 +1032,6 @@ button {
   padding-block: var(--band-pad);
 }
 
-.pub-grid__folio {
-  display: block;
-  margin-bottom: 1.5rem;
-}
-
 .pub-grid__head {
   display: flex;
   align-items: baseline;
@@ -1230,7 +1180,6 @@ button {
    17. Motion — scroll reveal, staggered load, reduced-motion
    -------------------------------------------------------------------------- */
 
-.hero__folio,
 .hero__eyebrow,
 .hero__headline,
 .hero__lede,
@@ -1238,7 +1187,6 @@ button {
   opacity: 0;
   animation: reveal-up 0.6s var(--ease) forwards;
 }
-.hero__folio    { animation-delay: 0ms; }
 .hero__eyebrow  { animation-delay: 60ms; }
 .hero__headline { animation-delay: 120ms; }
 .hero__lede     { animation-delay: 180ms; }
@@ -1275,7 +1223,7 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero__folio, .hero__eyebrow, .hero__headline, .hero__lede, .hero__actions,
+  .hero__eyebrow, .hero__headline, .hero__lede, .hero__actions,
   .focus-card, .person-card, .activity-card, .work-item, .pub-card {
     animation: none !important;
     transition: none !important;

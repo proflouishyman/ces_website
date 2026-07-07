@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Scholars | Center on Economy and Society</title>
+<meta name="description" content="Leadership, postdoctoral fellows, and visiting fellows at the Center on Economy and Society, SNF Agora Institute, Johns Hopkins University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  document.documentElement.classList.add('js-reveal');
+</script>
+<script src="js/app.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header id="site-header" class="site-header">
+  <div class="site-header__inner container">
+    <a class="site-header__brand" href="index.html">
+      <span class="site-header__superlabel">SNF Agora · Johns Hopkins</span>
+      <span class="site-header__wordmark">Center on Economy and Society</span>
+    </a>
+    <nav class="site-header__nav" aria-label="Primary">
+      <a class="site-header__link" href="index.html">Home</a>
+      <a class="site-header__link site-header__link--active" href="people.html">Scholars</a>
+      <a class="site-header__link" href="focus-areas.html">Research Pillars</a>
+      <a class="site-header__link" href="programs.html">Programs</a>
+      <a class="site-header__link" href="media.html">Media</a>
+      <a class="site-header__link" href="about.html">About</a>
+    </nav>
+    <a class="site-header__cta btn btn--pill" href="programs.html#opportunities">Get involved<span class="btn__arrow">→</span></a>
+    <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-header-nav" aria-label="Toggle navigation menu"></button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section id="people" class="people" aria-labelledby="people-head">
+    <div class="page-head container">
+      <p class="page-head__eyebrow eyebrow eyebrow--teal" id="people-head">Our Scholars</p>
+      <h2 class="page-head__title">Leadership, postdoctoral fellows, and visiting fellows</h2>
+    </div>
+    <div class="role-filter container" role="group" aria-label="Filter scholars by role">
+      <button class="role-filter__btn is-active" type="button" data-role-filter="all">All</button>
+      <button class="role-filter__btn" type="button" data-role-filter="leadership">Leadership</button>
+      <button class="role-filter__btn" type="button" data-role-filter="postdoc">Postdoctoral Fellows</button>
+      <button class="role-filter__btn" type="button" data-role-filter="visiting">Visiting Fellows</button>
+    </div>
+    <div class="person-grid container" id="person-grid" data-loading="true">
+      <!-- JS-rendered: fetch('data/people.json'), linking to person.html?id={id} -->
+    </div>
+  </section>
+
+</main>
+
+<footer id="site-footer" class="site-footer">
+  <div class="site-footer__inner container">
+    <div class="site-footer__brand">Center on Economy and Society</div>
+
+    <div class="site-footer__col">
+      <p class="site-footer__col-head eyebrow eyebrow--sky">Explore</p>
+      <a class="site-footer__link" href="people.html">Scholars</a>
+      <a class="site-footer__link" href="focus-areas.html">Research Pillars</a>
+      <a class="site-footer__link" href="programs.html">Programs</a>
+      <a class="site-footer__link" href="media.html">Media</a>
+      <a class="site-footer__link" href="about.html">About</a>
+    </div>
+
+    <div class="site-footer__col">
+      <p class="site-footer__col-head eyebrow eyebrow--sky">Get Involved</p>
+      <a class="site-footer__link" href="programs.html#opportunities">Opportunities</a>
+      <a class="site-footer__link" href="index.html#publications">Recent Work</a>
+    </div>
+
+    <p class="site-footer__attribution">The Center on Economy and Society is part of the <a class="site-footer__attribution-link" href="https://snfagora.jhu.edu">SNF Agora Institute at Johns Hopkins University</a>. 3100 Wyman Park Dr, Baltimore, MD 21218. Funded by the William and Flora Hewlett Foundation and Omidyar Network.</p>
+    <p class="site-footer__legal">© 2026 Center on Economy and Society.</p>
+  </div>
+</footer>
+
+</body>
+</html>
