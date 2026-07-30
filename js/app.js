@@ -52,6 +52,7 @@ function init() {
     buildOpportunities();
     buildAbout();
     buildMedia();
+    buildFooterNewsletter();
     setupEventListeners();
     initScrollReveal();
   } catch (e) {
@@ -113,6 +114,21 @@ function avatarHtml(person, sizeClass) {
 function focusTagsHtml(person, max = 2) {
   const topics = (person.topics || []).slice(0, max);
   return topics.map(t => `<span class="tag tag--focus">${escHtml(t)}</span>`).join('');
+}
+
+// Pulls a 4-digit year out of a publication/media "year" field, which may be
+// a number, a string, or a range like "2021/2025" (takes the later year).
+// Returns null when nothing parseable is present — never fabricated.
+function extractYear(val) {
+  if (val == null) return null;
+  const matches = String(val).match(/\d{4}/g);
+  return matches ? parseInt(matches[matches.length - 1], 10) : null;
+}
+
+// De-emphasis threshold: anything more than 2 years old relative to today.
+function isDated(val) {
+  const year = extractYear(val);
+  return year != null && (new Date().getFullYear() - year) > 2;
 }
 
 // Honest, data-driven work cue: never a fabricated count.
@@ -238,8 +254,12 @@ function workSectionHtml(p) {
   const media = p.media || [];
   const items = [];
 
-  pubs.forEach(pub => items.push(workItemHtml(pub, pub.type || 'article')));
-  media.forEach(m => items.push(workItemHtml(
+  // Newest first within each group, so de-emphasized (>2yr old) work sinks
+  // toward the bottom rather than just sitting dimmed in its original spot.
+  const byYearDesc = (a, b) => (extractYear(b.year) || 0) - (extractYear(a.year) || 0);
+
+  [...pubs].sort(byYearDesc).forEach(pub => items.push(workItemHtml(pub, pub.type || 'article')));
+  [...media].sort(byYearDesc).forEach(m => items.push(workItemHtml(
     { title: m.title, venue: m.outlet, year: m.year, url: m.url }, 'article'
   )));
   if (p.substack) {
@@ -295,8 +315,9 @@ function workItemHtml(item, type) {
   const badge = WORK_BADGE_LABEL[modifier] || 'Article';
   const meta = [item.venue, item.year].filter(Boolean).join(' · ');
   const cover = item.cover ? `<img class="work-item__cover" src="${escAttr(item.cover)}" alt="" loading="lazy">` : '';
+  const dated = isDated(item.year) ? ' is-dated' : '';
   return `
-    <a class="work-item work-item--${modifier}" href="${escAttr(item.url)}" target="_blank" rel="noopener">
+    <a class="work-item work-item--${modifier}${dated}" href="${escAttr(item.url)}" target="_blank" rel="noopener">
       <span class="work-item__badge">${escHtml(badge)}</span>
       <div class="work-item__content">
         <h3 class="work-item__title">${escHtml(item.title)}</h3>
@@ -346,15 +367,16 @@ function buildPublicationsFeed() {
       flat.push({ ...pub, personId: p.id, personName: p.name });
     });
   });
-  flat.sort((a, b) => (b.year || 0) - (a.year || 0));
+  flat.sort((a, b) => (extractYear(b.year) || 0) - (extractYear(a.year) || 0));
 
   let cardsHtml;
   if (flat.length) {
     cardsHtml = flat.slice(0, 8).map(pub => {
       const modifier = ['book', 'article', 'newsletter'].includes(pub.type) ? pub.type : 'article';
       const badge = WORK_BADGE_LABEL[modifier] || 'Article';
+      const dated = isDated(pub.year) ? ' is-dated' : '';
       return `
-        <a class="pub-card work-item--${modifier}" href="${personLink(pub.personId)}">
+        <a class="pub-card work-item--${modifier}${dated}" href="${personLink(pub.personId)}">
           <span class="pub-card__badge">${escHtml(badge)}</span>
           <h3 class="pub-card__title">${escHtml(pub.title)}</h3>
           <p class="pub-card__author">${escHtml(pub.personName)}</p>
@@ -511,6 +533,21 @@ function buildAbout() {
       </div>
     ` : ''}
   `;
+}
+
+// ── FOOTER NEWSLETTER (all pages) ────────────────────────────
+
+// Fills in the footer's "Join our mailing list" link from
+// data/site-content.json.newsletter, so updating the form URL is a JSON-only
+// edit (see README's "content-only edit" pattern) and never touches the
+// 7 copy-pasted footer markups directly.
+function buildFooterNewsletter() {
+  const link = document.getElementById('footer-newsletter-link');
+  if (!link || !siteContent) return;
+  const nl = siteContent.newsletter;
+  if (!nl) return;
+  link.textContent = `${nl.label || 'Join our mailing list'} →`;
+  if (nl.form_url) link.href = nl.form_url;
 }
 
 // ── MEDIA (media.html — talks & appearances, newsletters) ────

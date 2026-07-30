@@ -1124,6 +1124,20 @@ button {
   letter-spacing: 0.05em;
 }
 
+/* Older-than-2-years de-emphasis (see app.js isDated()) — dimmed, not
+   hidden, so nothing disappears from the record, and full-strength on
+   hover/focus so it stays readable and keyboard-accessible. */
+.work-item.is-dated,
+.pub-card.is-dated {
+  opacity: 0.55;
+}
+.work-item.is-dated:hover,
+.work-item.is-dated:focus-within,
+.pub-card.is-dated:hover,
+.pub-card.is-dated:focus-within {
+  opacity: 0.9;
+}
+
 /* --------------------------------------------------------------------------
    16. Footer
    -------------------------------------------------------------------------- */
@@ -1163,6 +1177,21 @@ button {
   transition: opacity 0.2s var(--ease), color 0.2s var(--ease);
 }
 .site-footer__link:hover { opacity: 1; color: var(--skyblue); }
+
+.site-footer__link--cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  padding: 0.6em 1.1em;
+  border-radius: var(--radius-pill);
+  background: var(--olive);
+  color: var(--navy);
+  font-weight: 600;
+  opacity: 1;
+}
+.site-footer__link--cta:hover { background: var(--skyblue); color: var(--navy); }
 
 .site-footer__attribution {
   grid-column: 1 / -1;

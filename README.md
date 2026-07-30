@@ -28,6 +28,14 @@ Nav links across all seven pages are plain relative `<a href="people.html">`-sty
 
 Talks/appearances and newsletters on `media.html` live in **`data/media.json`**, an object with two flat arrays: `talks` (`{ scholar_id, title, venue, url }`) and `newsletters` (`{ scholar_id, name, url }`). `venue` is optional. `scholar_id` must match an `id` in `data/people.json` so the item can link back to that scholar's profile — adding a new talk or newsletter is a JSON-only edit, no HTML/JS/CSS change needed. A scholar's `substack` field in `data/people.json` (used on their own `person.html` profile) is separate from the `newsletters` list here; keep both in sync if a scholar's newsletter changes.
 
+## Mailing list signup
+
+The "Join our mailing list" button in the footer (all seven pages) is driven by `data/site-content.json` → `newsletter.form_url` — it is currently a **placeholder** (`https://forms.gle/REPLACE-WITH-YOUR-GOOGLE-FORM-URL`) since no signup form exists yet. To go live: create a Google Form with an email-address question, then paste its "Send" link into `newsletter.form_url` (and adjust `newsletter.label` if you want different button text). This is a JSON-only edit — the footer link on every page updates itself via `js/app.js`'s `buildFooterNewsletter()`, no HTML edit needed.
+
+## Publications, media & the 2-year de-emphasis
+
+Any `publications` entry (in `data/people.json`) or aggregated home-page "Recent Work" card whose `year` is **more than two years old** is automatically shown dimmed (via an `.is-dated` CSS class) and sorted below more recent work on a scholar's page — nothing is deleted or hidden, just visually de-emphasized so the freshest work stands out. This is computed live from the current date in `js/app.js` (`isDated()`/`extractYear()`), so it updates automatically every year — you never need to manually re-flag old entries. `year` can be a plain number, a string, or a range like `"2021/2025"` (the later year is used). Talks in `data/media.json` have no `year` field today, so they're not yet part of this de-emphasis; add a `year` field there if that's wanted later.
+
 ## Updating the People Roster
 
 All scholar/staff info lives in **`data/people.json`**. It's a JSON list — one object per person. You do not need to touch any HTML, CSS, or JS file to add, remove, or edit a person; the site rebuilds itself from this file automatically the next time the page loads.
