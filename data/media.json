@@ -61,7 +61,7 @@
       "title": "Ezra Klein Show segment",
       "venue": null,
       "url": "https://youtube.com/playlist?list=PLv3pYVbcWueYsHwSHnpGTxEMg_T68auHE",
-      "year": null
+      "year": 2026
     },
     {
       "scholar_id": "henry-farrell",
@@ -131,7 +131,8 @@
       "title": "On the Front Porch: Rural Versus Urban",
       "venue": "Brookings Institution",
       "url": "https://www.brookings.edu/events/on-the-front-porch-suzanne-mettler-trevor-e-brown-rural-versus-urban/",
-      "year": 2025
+      "year": 2025,
+      "cover": "https://www.brookings.edu/wp-content/uploads/2025/11/Screenshot-2025-11-20-at-11.18.29-AM.png"
     }
   ],
   "newsletters": [
