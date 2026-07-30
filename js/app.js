@@ -244,6 +244,7 @@ function roleLabel(role) {
   if (role === 'postdoc') return 'Postdoctoral Fellow';
   if (role === 'visiting') return 'Visiting Fellow';
   if (role === 'alumni') return 'Alum';
+  if (role === 'affiliate') return 'Affiliate';
   return 'Scholar';
 }
 

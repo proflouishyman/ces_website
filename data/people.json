@@ -1483,5 +1483,98 @@
     ],
     "substack": null,
     "media": []
+  },
+  {
+    "id": "jeanne-marie-jackson",
+    "name": "Jeanne-Marie Jackson",
+    "title": "Affiliate, Center for Economy and Society; Professor of English; Director, Alexander Grass Humanities Institute",
+    "role": "affiliate",
+    "institution": "Johns Hopkins University",
+    "bio": "Jeanne-Marie Jackson is Professor of English at Johns Hopkins University, Director of the Alexander Grass Humanities Institute, and Senior Editor of ELH. Her work situates African literature and intellectual history within broader questions of comparative method, philosophy, and liberal thought.",
+    "photo": null,
+    "directory_url": "https://english.jhu.edu/directory/jeanne-marie-jackson/",
+    "personal_website": "https://jeannemariejackson.com/",
+    "topics": [
+      "African Literature",
+      "Comparative Literature",
+      "Intellectual History",
+      "Literature & Philosophy"
+    ],
+    "publications": [
+      {
+        "type": "book",
+        "title": "The Letter of the Law in J. E. Casely Hayford's West Africa",
+        "venue": "Princeton University Press",
+        "year": 2026,
+        "url": "https://press.princeton.edu/books/paperback/9780691271002/the-letter-of-the-law-in-j-e-casely-hayfords-west-africa"
+      },
+      {
+        "type": "book",
+        "title": "The African Novel of Ideas: Philosophy and Individualism in the Age of Global Writing",
+        "venue": "Princeton University Press",
+        "year": 2021,
+        "url": "https://press.princeton.edu/books/hardcover/9780691186443/the-african-novel-of-ideas"
+      },
+      {
+        "type": "book",
+        "title": "South African Literature's Russian Soul: Narrative Forms of Global Isolation",
+        "venue": "Bloomsbury",
+        "year": 2015,
+        "url": "https://www.bloomsburycollections.com/book/south-african-literatures-russian-soul-narrative-forms-of-global-isolation/"
+      }
+    ],
+    "substack": null,
+    "media": [
+      {
+        "outlet": "Journal of the History of Ideas Blog",
+        "title": "Living the Law: An Interview with Jeanne-Marie Jackson",
+        "year": 2026,
+        "url": "https://www.jhiblog.org/2026/02/11/living-the-law-an-interview-with-jeanne-marie-jackson/"
+      }
+    ]
+  },
+  {
+    "id": "rina-agarwala",
+    "name": "Rina Agarwala",
+    "title": "Affiliate, Center for Economy and Society; Professor of Sociology",
+    "role": "affiliate",
+    "institution": "Johns Hopkins University",
+    "bio": "Rina Agarwala is Professor of Sociology at Johns Hopkins University, where she researches international development, labor, migration, gender, social movements, and Indian politics. She previously worked at the UN Development Programme in China, the Self-Employed Women's Association in India, and Women's World Banking in New York.",
+    "photo": null,
+    "directory_url": "https://snfagora.jhu.edu/directory/rina-agarwala/",
+    "personal_website": null,
+    "topics": [
+      "Labor & Informal Economy",
+      "Migration",
+      "Gender",
+      "Social Movements",
+      "Indian Politics",
+      "Economic Development"
+    ],
+    "publications": [
+      {
+        "type": "book",
+        "title": "The Migration-Development Regime: How Class Shapes Indian Emigration",
+        "venue": "Oxford University Press (Modern South Asia Series)",
+        "year": 2022,
+        "url": "https://global.oup.com/academic/product/the-migration-development-regime-9780197586402"
+      },
+      {
+        "type": "book",
+        "title": "Informal Labor, Formal Politics, and Dignified Discontent in India",
+        "venue": "Cambridge University Press",
+        "year": 2013,
+        "url": "https://www.cambridge.org/core/books/informal-labor-formal-politics-and-dignified-discontent-in-india/A879C9C8FA982E599BF941C5FAF68E2A"
+      },
+      {
+        "type": "book",
+        "title": "Whatever Happened to Class? Reflections from South Asia",
+        "venue": "Routledge (co-edited)",
+        "year": 2008,
+        "url": null
+      }
+    ],
+    "substack": null,
+    "media": []
   }
 ]
