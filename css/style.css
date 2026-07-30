@@ -919,8 +919,15 @@ button {
   max-width: var(--maxw-read);
 }
 
+.work-item__cover-link {
+  display: inline-block;
+  margin-top: 0.3rem;
+}
+
 .work-item__cover {
-  width: 3.5rem;
+  width: 6rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: 4px;
   box-shadow: var(--shadow-card);
 }
