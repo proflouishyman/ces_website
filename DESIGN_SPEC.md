@@ -170,7 +170,7 @@ Per site-owner feedback, the site is **seven separate HTML documents**, not one 
 | Page | Content |
 |---|---|
 | `index.html` | Home: hero, "Recent work" teaser (top publications across all scholars), mission pillars, compact Research Pillars teaser (first 3 pillars) |
-| `people.html` | Full scholar roster + role filter (leadership/postdoc/visiting/all) |
+| `people.html` | Full scholar roster + role filter (leadership/postdoc/visiting/alumni/all) |
 | `person.html?id={id}` | Scholar detail, driven by the `id` query parameter — reads `data/people.json` client-side and looks up the matching record. **Never generate a static file per person**; this stays data-driven so adding/removing a scholar requires editing only `data/people.json`. |
 | `focus-areas.html` | Full Research Pillars grid (nav/page label "Research Pillars"; filename kept as `focus-areas.html` to avoid churn), from `site-content.json`'s `focus_areas` — now **4** pillars, not 8 (see §3.4) |
 | `programs.html` | Programs + Ongoing Activities + Opportunities sections (formerly three separate sections on the long page) |
