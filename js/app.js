@@ -131,6 +131,19 @@ function isDated(val) {
   return year != null && (new Date().getFullYear() - year) > 2;
 }
 
+// Derives a thumbnail image URL for a talk: explicit item.cover wins (for
+// non-YouTube sources where we've verified a real image), else a YouTube
+// video ID is extracted from watch/shorts/youtu.be URLs and its standard
+// thumbnail (img.youtube.com/vi/{id}/...) is used — no API key needed, and
+// it degrades to no image (never a fabricated/guessed one) for playlist
+// links or non-YouTube URLs.
+function talkThumbnail(item) {
+  if (item.cover) return item.cover;
+  const url = item.url || '';
+  const match = url.match(/(?:[?&]v=|youtube\.com\/shorts\/|youtu\.be\/)([\w-]{11})/);
+  return match ? `https://img.youtube.com/vi/${match[1]}/mqdefault.jpg` : null;
+}
+
 // Honest, data-driven work cue: never a fabricated count.
 function workCue(person) {
   const n = (person.publications || []).length;
@@ -562,9 +575,14 @@ function buildFooterNewsletter() {
 function talkItemHtml(talk) {
   const scholar = people.find(p => p.id === talk.scholar_id);
   const scholarName = scholar ? scholar.name : talk.scholar_id;
-  const meta = [talk.venue].filter(Boolean).join(' · ');
+  const meta = [talk.venue, talk.year].filter(Boolean).join(' · ');
+  const dated = isDated(talk.year) ? ' is-dated' : '';
+  const thumb = talkThumbnail(talk);
+  const cover = thumb
+    ? `<a class="work-item__cover-link" href="${escAttr(talk.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img class="work-item__cover" src="${escAttr(thumb)}" alt="" loading="lazy"></a>`
+    : '';
   return `
-    <div class="work-item work-item--talk">
+    <div class="work-item work-item--talk${dated}">
       <span class="work-item__badge">Talk</span>
       <div class="work-item__content">
         <h3 class="work-item__title"><a href="${escAttr(talk.url)}" target="_blank" rel="noopener">${escHtml(talk.title)}</a></h3>
@@ -572,6 +590,7 @@ function talkItemHtml(talk) {
           ${scholar ? `<a href="${personLink(scholar.id)}">${escHtml(scholarName)}</a>` : escHtml(scholarName)}
           ${meta ? ` · ${escHtml(meta)}` : ''}
         </p>
+        ${cover}
       </div>
       <a class="work-item__cue" href="${escAttr(talk.url)}" target="_blank" rel="noopener" aria-label="Watch ${escAttr(talk.title)}">↗</a>
     </div>
@@ -609,7 +628,10 @@ function buildMedia() {
 
   if (talksList) {
     talksList.removeAttribute('data-loading');
-    const talks = mediaContent.talks || [];
+    // Most recent first; talks with no verified year (extractYear -> null,
+    // treated as 0) sink to the bottom rather than being guessed at.
+    const talks = [...(mediaContent.talks || [])]
+      .sort((a, b) => (extractYear(b.year) || 0) - (extractYear(a.year) || 0));
     talksList.innerHTML = talks.length
       ? talks.map(talkItemHtml).join('')
       : '<p class="empty-state">No talks or appearances yet.</p>';
