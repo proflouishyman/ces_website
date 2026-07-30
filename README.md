@@ -51,7 +51,7 @@ All scholar/staff info lives in **`data/people.json`**. It's a JSON list — one
    - `id` — a short, unique, URL-safe slug, lowercase with hyphens (e.g. `"jane-doe"`). This becomes part of the person's page link (`person.html?id=jane-doe`), so once published, avoid changing it.
    - `name` — full display name.
    - `title` — their role/title as it should appear on the site.
-   - `role` — must be exactly one of: `"leadership"`, `"postdoc"`, or `"visiting"`. This controls which filter group and section they show up in (Leadership / Postdoctoral Fellows / Visiting Fellows). Any other value will cause them to not appear when a filter is selected.
+   - `role` — must be exactly one of: `"leadership"`, `"postdoc"`, `"visiting"`, or `"alumni"`. This controls which filter group they show up in (Leadership / Postdoctoral Fellows / Visiting Fellows / Alumni). Any other value will cause them to not appear when a filter is selected. Use `"alumni"` for anyone who has left CES (e.g. a former postdoc who has moved on) rather than deleting their entry — update their `title` to say "Former ..." so it's clear on their card and profile.
    - `institution` — e.g. `"Johns Hopkins University"`.
 
    **Optional (use `null` or `[]`/`{}` if unknown — do not delete the field):**
@@ -82,7 +82,11 @@ All scholar/staff info lives in **`data/people.json`**. It's a JSON list — one
 ### To change someone's role or title
 
 - Open `data/people.json`, find their entry (search for their name or `id`), and edit the `"title"` and/or `"role"` field directly.
-- Remember `"role"` must be exactly `"leadership"`, `"postdoc"`, or `"visiting"` — any other spelling will not show up under any filter.
+- Remember `"role"` must be exactly `"leadership"`, `"postdoc"`, `"visiting"`, or `"alumni"` — any other spelling will not show up under any filter.
+
+### Moving someone to Alumni
+
+When a postdoc, visiting fellow, or other scholar leaves CES, don't delete their entry — set `"role": "alumni"` and prepend "Former" to their `"title"` (e.g. `"Postdoctoral Fellow in Moral and Political Economy"` → `"Former Postdoctoral Fellow in Moral and Political Economy"`). Leave `institution` as `"Johns Hopkins University"` (it reflects their CES affiliation, not wherever they've gone next) unless you have a confirmed new title/institution to add. Their publications, media, and talks all stay attached to their profile — nothing else needs to change.
 
 ### Checking your edit
 
