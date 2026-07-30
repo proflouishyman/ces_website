@@ -26,7 +26,9 @@ Nav links across all seven pages are plain relative `<a href="people.html">`-sty
 
 ## Updating Media (talks & newsletters)
 
-Talks/appearances and newsletters on `media.html` live in **`data/media.json`**, an object with two flat arrays: `talks` (`{ scholar_id, title, venue, url }`) and `newsletters` (`{ scholar_id, name, url }`). `venue` is optional. `scholar_id` must match an `id` in `data/people.json` so the item can link back to that scholar's profile — adding a new talk or newsletter is a JSON-only edit, no HTML/JS/CSS change needed. A scholar's `substack` field in `data/people.json` (used on their own `person.html` profile) is separate from the `newsletters` list here; keep both in sync if a scholar's newsletter changes.
+Talks/appearances and newsletters on `media.html` live in **`data/media.json`**, an object with two flat arrays: `talks` (`{ scholar_id, title, venue, url, year }`) and `newsletters` (`{ scholar_id, name, url }`). `venue` and `year` are optional (use `null` if unconfirmed, never guess). `scholar_id` must match an `id` in `data/people.json` so the item can link back to that scholar's profile — adding a new talk or newsletter is a JSON-only edit, no HTML/JS/CSS change needed. A scholar's `substack` field in `data/people.json` (used on their own `person.html` profile) is separate from the `newsletters` list here; keep both in sync if a scholar's newsletter changes.
+
+**Talks are sorted most-recent-first automatically** (via `year`, computed in `js/app.js`'s `buildMedia()`) — you never need to manually order them in the JSON. Talks with no `year` sink to the bottom rather than being guessed at. **Thumbnails are automatic too**: any `talk.url` pointing at a YouTube watch/shorts/youtu.be link gets its standard YouTube thumbnail image for free (no data entry needed, no API key) via `talkThumbnail()` in `js/app.js`; non-YouTube links (event pages, playlists) simply render without a thumbnail rather than a fabricated one. If you ever have a real image for a non-YouTube talk, set `"cover": "https://..."` on that entry and it takes priority over the YouTube lookup.
 
 ## Mailing list signup
 
