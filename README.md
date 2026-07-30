@@ -36,7 +36,7 @@ The "Join our mailing list" button in the footer (all seven pages) is driven by 
 
 ## Publications, media & the 2-year de-emphasis
 
-Any `publications` entry (in `data/people.json`) or aggregated home-page "Recent Work" card whose `year` is **more than two years old** is automatically shown dimmed (via an `.is-dated` CSS class) and sorted below more recent work on a scholar's page — nothing is deleted or hidden, just visually de-emphasized so the freshest work stands out. This is computed live from the current date in `js/app.js` (`isDated()`/`extractYear()`), so it updates automatically every year — you never need to manually re-flag old entries. `year` can be a plain number, a string, or a range like `"2021/2025"` (the later year is used). Talks in `data/media.json` have no `year` field today, so they're not yet part of this de-emphasis; add a `year` field there if that's wanted later.
+Any `publications` entry (in `data/people.json`) or aggregated home-page "Recent Work" card whose `year` is **more than two years old** is automatically shown dimmed (via an `.is-dated` CSS class) and sorted below more recent work on a scholar's page — nothing is deleted or hidden, just visually de-emphasized so the freshest work stands out. This is computed live from the current date in `js/app.js` (`isDated()`/`extractYear()`), so it updates automatically every year — you never need to manually re-flag old entries. `year` can be a plain number, a string, or a range like `"2021/2025"` (the later year is used). Talks in `data/media.json` now carry a `year` field too and get the same dimming treatment.
 
 ## Updating the People Roster
 
