@@ -261,6 +261,34 @@
         "venue": "Project Syndicate",
         "year": 2024,
         "url": "https://www.project-syndicate.org/commentary/new-economic-development-paradigm-needed-for-climate-change-inequality-pandemics-by-yuen-yuen-ang-2024-11"
+      },
+      {
+        "type": "op-ed",
+        "title": "The Global Polytunity",
+        "venue": "Project Syndicate",
+        "year": 2025,
+        "url": "https://www.project-syndicate.org/commentary/polycrisis-is-actually-opportunity-to-transform-global-development-paradigm-by-yuen-yuen-ang-2025-10"
+      },
+      {
+        "type": "op-ed",
+        "title": "The World Order After 2025",
+        "venue": "Project Syndicate",
+        "year": 2025,
+        "url": "https://www.project-syndicate.org/commentary/polycrisis-creates-opportunity-for-building-a-fairer-more-resilient-global-order-by-yuen-yuen-ang-2025-12"
+      },
+      {
+        "type": "op-ed",
+        "title": "Industrial Policy for an Age of Uncertainty",
+        "venue": "Project Syndicate",
+        "year": 2026,
+        "url": "https://www.project-syndicate.org/commentary/industrial-policy-directed-improvisation-not-picking-winners-by-yuen-yuen-ang-2026-05"
+      },
+      {
+        "type": "article",
+        "title": "Complex Doesn't Mean Complicated—and Why It Matters for Political Economy",
+        "venue": "World Politics (Princeton)",
+        "year": 2026,
+        "url": "https://wpj.princeton.edu/news/2026/complex-doesn%E2%80%99t-mean-complicated"
       }
     ],
     "substack": {
@@ -444,8 +472,50 @@
         "type": "op-ed",
         "title": "The Weaponized World Economy: Surviving the New Age of Economic Coercion",
         "venue": "Foreign Affairs",
-        "year": "2023",
+        "year": 2025,
         "url": "https://www.foreignaffairs.com/united-states/weaponized-world-economy-farrell-newman"
+      },
+      {
+        "type": "article",
+        "title": "Large AI models are cultural and social technologies",
+        "venue": "Science, with Alison Gopnik, Cosma Shalizi & James Evans",
+        "year": 2025,
+        "url": "https://www.science.org/doi/10.1126/science.adt9819"
+      },
+      {
+        "type": "op-ed",
+        "title": "The Brewing Transatlantic Tech War",
+        "venue": "Foreign Affairs, with Abraham Newman",
+        "year": 2025,
+        "url": "https://www.foreignaffairs.com/united-states/brewing-transatlantic-tech-war"
+      },
+      {
+        "type": "op-ed",
+        "title": "The Enshittification of American Power",
+        "venue": "WIRED, with Abraham Newman",
+        "year": 2025,
+        "url": "https://henryfarrell.net/the-enshittification-of-american-power/"
+      },
+      {
+        "type": "op-ed",
+        "title": "How Civil Society Can Beat Trumpism",
+        "venue": "The New York Times",
+        "year": 2025,
+        "url": "https://henryfarrell.net/nyt-how-civil-society-can-beat-trumpism/"
+      },
+      {
+        "type": "article",
+        "title": "The Moral Economy of High-Tech Modernism",
+        "venue": "Daedalus, with Marion Fourcade",
+        "year": 2023,
+        "url": "https://www.amacad.org/publication/daedalus/moral-economy-high-tech-modernism"
+      },
+      {
+        "type": "op-ed",
+        "title": "Can Big Tech Serve Democracy?",
+        "venue": "Boston Review, with Glen Weyl",
+        "year": 2021,
+        "url": "https://www.bostonreview.net/articles/can-big-tech-serve-democracy/"
       }
     ],
     "substack": {
@@ -528,6 +598,41 @@
         "venue": "The New York Times",
         "year": 2019,
         "url": "https://www.nytimes.com/2019/03/07/opinion/europe-taxes-sweden.html"
+      },
+      {
+        "type": "article",
+        "title": "Peace by Committee: State, Society, and the Control of Communal Violence in Bhagalpur, Bihar",
+        "venue": "India Review, Vol. 21, No. 2, with Aditi Malik",
+        "year": 2022,
+        "url": "https://www.tandfonline.com/doi/full/10.1080/14736489.2022.2080486"
+      },
+      {
+        "type": "article",
+        "title": "Hidden Benefits and Dangers of Carbon Tax",
+        "venue": "PLOS Climate",
+        "year": 2022,
+        "url": "https://journals.plos.org/climate/article?id=10.1371/journal.pclm.0000052"
+      },
+      {
+        "type": "article",
+        "title": "Proto-Bureaucracies",
+        "venue": "Sociological Science, Vol. 9",
+        "year": 2022,
+        "url": "https://sociologicalscience.com/articles-v9-15-374/"
+      },
+      {
+        "type": "article",
+        "title": "A Carbon Tax by Any Other Name: Public Benefit Funds in the American States",
+        "venue": "PLOS Climate, Vol. 2, No. 2",
+        "year": 2023,
+        "url": "https://journals.plos.org/climate/article?id=10.1371/journal.pclm.0000073"
+      },
+      {
+        "type": "article",
+        "title": "Solving Global Poverty – Three Sociological Approaches",
+        "venue": "Sociology of Development, Vol. 10",
+        "year": 2025,
+        "url": "https://snfagora.jhu.edu/resources/solving-global-poverty-three-sociological-approaches/"
       }
     ],
     "substack": null,

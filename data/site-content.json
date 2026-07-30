@@ -82,6 +82,10 @@
       "description": "Full-time summer internships placing students with leading international development organizations."
     }
   ],
+  "newsletter": {
+    "label": "Join our mailing list",
+    "form_url": "https://forms.gle/REPLACE-WITH-YOUR-GOOGLE-FORM-URL"
+  },
   "about": {
     "established": "2022",
     "director": "Louis Hyman",
