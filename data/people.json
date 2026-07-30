@@ -1419,68 +1419,6 @@
     "media": []
   },
   {
-    "id": "sanjay-ruparelia",
-    "name": "Sanjay Ruparelia",
-    "title": "Visiting Fellow, SNF Agora Institute",
-    "role": "visiting",
-    "institution": "Johns Hopkins University",
-    "bio": "Sanjay Ruparelia holds the inaugural Jarislowsky Democracy Chair at Toronto Metropolitan University, where he is a Professor of Politics and Public Administration. His research examines the politics of democracy, equality, and development in the postcolonial world, with a focus on Indian politics and political economy. He is the author of Divided We Govern: Coalition Politics in Modern India (Hurst & Oxford University Press, 2015), editor of The Indian Ideology: Three Responses to Perry Anderson (Permanent Black, 2015), and co-editor of Understanding India's New Political Economy: A Great Transformation? (Routledge, 2011). His scholarship has appeared in journals including Comparative Politics, Economic & Political Weekly, and Pacific Affairs, and his commentary has appeared in outlets such as the Globe and Mail, Indian Express, and Toronto Star. He co-chairs Participedia, an international research network on democratic innovations, and co-hosts the podcast and lecture series On the Frontlines of Democracy with the Toronto Public Library. He previously taught at the New School for Social Research and Columbia University, and has consulted for the UN Development Programme and the Asia Foundation. He holds a BA from McGill University and an MPhil and PhD from the University of Cambridge.",
-    "photo": "images/people/sanjay-ruparelia.jpg",
-    "directory_url": "https://snfagora.jhu.edu/directory/sanjay-ruparelia/",
-    "personal_website": null,
-    "topics": [
-      "South Asia",
-      "Democracy & Governance",
-      "Political Economy",
-      "Political Institutions",
-      "Public Policy",
-      "Global South Political Economy"
-    ],
-    "publications": [
-      {
-        "type": "book",
-        "title": "Divided We Govern: Coalition Politics in Modern India",
-        "venue": "Hurst & Company / Oxford University Press",
-        "year": 2015,
-        "url": "https://global.oup.com/academic/product/divided-we-govern-9780190264918"
-      },
-      {
-        "type": "edited volume",
-        "title": "The Indian Ideology: Three Responses to Perry Anderson",
-        "venue": "Permanent Black (editor; contributors Partha Chatterjee, Sudipta Kaviraj, Nivedita Menon)",
-        "year": 2015,
-        "url": "https://www.permanentblack.com/product-page/bigcovers-noimage-jpg-the-indian-ideology-three-responses-to-perry-anderson"
-      },
-      {
-        "type": "co-edited volume",
-        "title": "Understanding India's New Political Economy: A Great Transformation?",
-        "venue": "Routledge (co-edited with Sanjay Reddy, John Harriss, Stuart Corbridge)",
-        "year": 2011,
-        "url": "https://pacificaffairs.ubc.ca/book-reviews/understanding-indias-new-political-economy-a-great-transformation-edited-by-sanjay-ruparelia-sanjay-reddy-john-harriss-and-stuart-corbridge/"
-      }
-    ],
-    "substack": null,
-    "media": [
-      {
-        "outlet": "The Globe and Mail",
-        "title": "In India, the government's election machine is humming – but the economy and democracy are at risk",
-        "year": 2022,
-        "url": "https://www.theglobeandmail.com/opinion/article-in-india-the-governments-election-machine-is-humming-but-the-economy/"
-      },
-      {
-        "outlet": "Toronto Public Library / TMU School of Journalism",
-        "title": "On the Frontlines of Democracy (monthly podcast and lecture series, co-host)",
-        "url": "https://podcasts.apple.com/us/podcast/on-the-frontlines-of-democracy/id1685897034"
-      },
-      {
-        "outlet": "Asia Pacific Foundation of Canada",
-        "title": "India in 2025: The Year Ahead in Politics, Economics, and Foreign Affairs",
-        "year": 2025,
-        "url": "https://www.asiapacific.ca/publication/india-2025-year-ahead-politics-economics-and-foreign-affairs"
-      }
-    ]
-  },
-  {
     "id": "hsu-huang",
     "name": "Hsu Huang",
     "title": "Postdoctoral Fellow, Center for Economy and Society (starting Fall 2026)",
