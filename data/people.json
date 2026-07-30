@@ -1479,5 +1479,71 @@
         "url": "https://www.asiapacific.ca/publication/india-2025-year-ahead-politics-economics-and-foreign-affairs"
       }
     ]
+  },
+  {
+    "id": "hsu-huang",
+    "name": "Hsu Huang",
+    "title": "Postdoctoral Fellow, Center for Economy and Society (starting Fall 2026)",
+    "role": "postdoc",
+    "institution": "Johns Hopkins University",
+    "bio": "Hsu Huang is an incoming postdoctoral fellow at the Center for Economy and Society, joining in Fall 2026. He is completing a PhD in Sociology at Brown University, where his research examines science, technology, and organizational dynamics in China and Russia, including the emergency development and regulation of COVID-19 vaccines.",
+    "photo": null,
+    "directory_url": null,
+    "personal_website": "https://sites.google.com/view/hsuhuang93",
+    "topics": [
+      "Science, Technology & Organizations",
+      "Comparative Political Economy",
+      "Public Health Policy",
+      "China & Eurasia"
+    ],
+    "publications": [],
+    "substack": null,
+    "media": []
+  },
+  {
+    "id": "michael-mandelkorn",
+    "name": "Michael Mandelkorn",
+    "title": "Postdoctoral Fellow, Center for Economy and Society (starting Fall 2026)",
+    "role": "postdoc",
+    "institution": "Johns Hopkins University",
+    "bio": "Michael Mandelkorn is an incoming postdoctoral fellow at the Center for Economy and Society, joining in Fall 2026. He is completing a PhD in History at Princeton University, where his dissertation, \"Arc of Complacency: The Rise and Fall of Soviet Monopoly over Burma,\" examines Soviet economic influence in Burma; he is a recipient of the Council of American Overseas Research Centers' (CAORC) Multi-Country Research Fellowship.",
+    "photo": null,
+    "directory_url": null,
+    "personal_website": null,
+    "topics": [
+      "Economic History",
+      "Soviet Studies"
+    ],
+    "publications": [],
+    "substack": null,
+    "media": []
+  },
+  {
+    "id": "laura-montenegro-helfer",
+    "name": "Laura Montenegro Helfer",
+    "title": "Postdoctoral Fellow, Center for Economy and Society (starting Fall 2026)",
+    "role": "postdoc",
+    "institution": "Johns Hopkins University",
+    "bio": "Laura Montenegro Helfer is an incoming postdoctoral fellow at the Center for Economy and Society, joining in Fall 2026. She is currently a postdoctoral Visiting Fellow in the Department of Economic History at the London School of Economics, and holds a PhD from the Harris School of Public Policy at the University of Chicago, where she was a Pearson Scholar at the Pearson Institute for the Study and Resolution of Global Conflicts. Her research examines state formation, land allocation, and political economy in Latin America and beyond.",
+    "photo": null,
+    "directory_url": null,
+    "personal_website": "https://laura-montenegro.com/",
+    "topics": [
+      "Economic History",
+      "Political Economy",
+      "State & Markets",
+      "Economic Development"
+    ],
+    "publications": [
+      {
+        "type": "working paper",
+        "title": "Forming State through Land Reform Policy: The Dynamics of Baldío Allocation in Peripheral Colombia",
+        "venue": "IDEAS/RePEc",
+        "year": null,
+        "url": "https://ideas.repec.org/p/col/000089/015433.html"
+      }
+    ],
+    "substack": null,
+    "media": []
   }
 ]
