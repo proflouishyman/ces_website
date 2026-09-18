@@ -39,24 +39,13 @@
 <main id="main">
   <p class="visually-hidden" id="page-status" role="status" aria-live="polite"></p>
 
-  <section id="talks" class="media-section" aria-labelledby="talks-head">
-    <div class="page-head container">
-      <p class="page-head__eyebrow eyebrow eyebrow--teal" id="talks-head">Media</p>
-      <h1 class="page-head__title">Talks &amp; Appearances</h1>
-      <p class="page-head__intro">Third-party-hosted video of our scholars in conversation — CES does not produce its own video.</p>
-    </div>
-    <div class="work-list container" id="talks-list" data-loading="true">
-      <!-- JS-rendered: fetch('data/media.json').talks, scholar name links to person.html?id={id} -->
-    </div>
-  </section>
-
-  <section id="press" class="media-section" aria-labelledby="press-head">
+  <section id="press" class="media-section media-section--lead" aria-labelledby="press-head">
     <div class="page-head container">
       <p class="page-head__eyebrow eyebrow eyebrow--teal" id="press-head">In the News</p>
-      <h2 class="page-head__title">Featured coverage</h2>
+      <h1 class="page-head__title">Featured coverage</h1>
       <p class="page-head__intro">Our scholars in major national and international outlets, updated daily from the SNF Agora media monitor. Links go to the original publication.</p>
     </div>
-    <div class="work-list container" id="press-featured-list" data-loading="true">
+    <div class="feature-grid container" id="press-featured-list" data-loading="true">
       <!-- JS-rendered: media.json .press where featured === true -->
     </div>
   </section>
@@ -83,6 +72,17 @@
           <!-- JS-rendered: media.json .substack_posts -->
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="talks" class="media-section" aria-labelledby="talks-head">
+    <div class="page-head container">
+      <p class="page-head__eyebrow eyebrow eyebrow--teal" id="talks-head">Media</p>
+      <h2 class="page-head__title">Talks &amp; Appearances</h2>
+      <p class="page-head__intro">Third-party-hosted video of our scholars in conversation — CES does not produce its own video.</p>
+    </div>
+    <div class="work-list container" id="talks-list" data-loading="true">
+      <!-- JS-rendered: fetch('data/media.json').talks, scholar name links to person.html?id={id} -->
     </div>
   </section>
 
