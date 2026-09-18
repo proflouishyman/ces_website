@@ -50,6 +50,42 @@
     </div>
   </section>
 
+  <section id="press" class="media-section" aria-labelledby="press-head">
+    <div class="page-head container">
+      <p class="page-head__eyebrow eyebrow eyebrow--teal" id="press-head">In the News</p>
+      <h2 class="page-head__title">Featured coverage</h2>
+      <p class="page-head__intro">Our scholars in major national and international outlets, updated daily from the SNF Agora media monitor. Links go to the original publication.</p>
+    </div>
+    <div class="work-list container" id="press-featured-list" data-loading="true">
+      <!-- JS-rendered: media.json .press where featured === true -->
+    </div>
+  </section>
+
+  <section id="more-media" class="media-section" aria-labelledby="more-media-head">
+    <p class="visually-hidden" id="more-media-head">More coverage and newsletter writing</p>
+    <div class="media-columns container">
+      <div class="media-column">
+        <div class="page-head media-column__head">
+          <p class="page-head__eyebrow eyebrow eyebrow--teal" id="press-more-head">Also Covered</p>
+          <h2 class="page-head__title media-column__title">More coverage</h2>
+        </div>
+        <div class="work-list" id="press-more-list" data-loading="true" aria-labelledby="press-more-head">
+          <!-- JS-rendered: media.json .press where featured !== true -->
+        </div>
+      </div>
+
+      <div class="media-column">
+        <div class="page-head media-column__head">
+          <p class="page-head__eyebrow eyebrow eyebrow--teal" id="newsletter-posts-head">Latest Posts</p>
+          <h2 class="page-head__title media-column__title">From our newsletters</h2>
+        </div>
+        <div class="work-list" id="substack-posts-list" data-loading="true" aria-labelledby="newsletter-posts-head">
+          <!-- JS-rendered: media.json .substack_posts -->
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="newsletters" class="media-section" aria-labelledby="newsletters-head">
     <div class="page-head container">
       <p class="page-head__eyebrow eyebrow eyebrow--teal" id="newsletters-head">Newsletters</p>

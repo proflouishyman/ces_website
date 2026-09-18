@@ -731,6 +731,71 @@ function newsletterItemHtml(nl) {
   `;
 }
 
+// Renders one press-mention row. Unlike talks (curated by hand), these come
+// from the daily media digest export, so a story can name several CES
+// scholars — each gets its own link back to their page.
+function pressItemHtml(item) {
+  const names = (item.scholar_ids || [])
+    .map(id => {
+      const p = people.find(x => x.id === id);
+      return p
+        ? `<a href="${escAttr(personLink(p.id))}">${escHtml(p.name)}</a>`
+        : null;
+    })
+    .filter(Boolean);
+  const year = item.date ? Number(String(item.date).slice(0, 4)) : null;
+  const meta = [item.source, formatPressDate(item.date)].filter(Boolean).join(' · ');
+  const dated = isDated(year) ? ' is-dated' : '';
+  return `
+    <div class="work-item work-item--press${dated}">
+      <span class="work-item__badge">Press</span>
+      <div class="work-item__content">
+        <h2 class="work-item__title"><a href="${escAttr(item.url)}" target="_blank" rel="noopener">${escHtml(item.title)}${newTabHintHtml()}</a></h2>
+        ${meta ? `<p class="work-item__meta">${escHtml(meta)}</p>` : ''}
+        ${names.length ? `<p class="work-item__note">${names.join(', ')}</p>` : ''}
+      </div>
+      <a class="work-item__cue" href="${escAttr(item.url)}" target="_blank" rel="noopener" aria-label="Read ${escAttr(item.title)} (opens in a new tab)">↗</a>
+    </div>
+  `;
+}
+
+// "2026-09-14" -> "14 September 2026". Parsed as parts, not via Date(), so a
+// bare YYYY-MM-DD is not shifted a day by UTC-vs-local interpretation.
+function formatPressDate(iso) {
+  if (!iso) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso));
+  if (!m) return String(iso);
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December'];
+  const month = MONTHS[Number(m[2]) - 1];
+  if (!month) return String(iso);
+  return `${Number(m[3])} ${month} ${m[1]}`;
+}
+
+// Renders one post from a scholar's own Substack. Distinct from a press row:
+// this is our scholar's writing, not coverage of them, so the scholar's name
+// and newsletter carry the byline rather than an outlet.
+function substackPostHtml(post) {
+  const scholar = people.find(p => p.id === post.scholar_id);
+  const byline = scholar
+    ? `<a href="${escAttr(personLink(scholar.id))}">${escHtml(scholar.name)}</a>`
+    : escHtml(post.scholar_id || '');
+  const meta = [post.newsletter, formatPressDate(post.date)].filter(Boolean).join(' · ');
+  const year = post.date ? Number(String(post.date).slice(0, 4)) : null;
+  const dated = isDated(year) ? ' is-dated' : '';
+  return `
+    <div class="work-item work-item--substack${dated}">
+      <span class="work-item__badge">Newsletter</span>
+      <div class="work-item__content">
+        <h2 class="work-item__title"><a href="${escAttr(post.url)}" target="_blank" rel="noopener">${escHtml(post.title)}${newTabHintHtml()}</a></h2>
+        ${meta ? `<p class="work-item__meta">${escHtml(meta)}</p>` : ''}
+        ${byline ? `<p class="work-item__note">${byline}</p>` : ''}
+      </div>
+      <a class="work-item__cue" href="${escAttr(post.url)}" target="_blank" rel="noopener" aria-label="Read ${escAttr(post.title)} (opens in a new tab)">↗</a>
+    </div>
+  `;
+}
+
 // Builds both media.html sections from data/media.json. Kept flexible per
 // the site owner's "edit JSON, not code" principle: adding a new talk or
 // newsletter later only requires a new object in data/media.json, in the
@@ -761,6 +826,48 @@ function buildMedia() {
       : '<p class="empty-state">No newsletters yet.</p>';
     observeRevealTargets(newslettersList.querySelectorAll('.work-item'));
   }
+
+  // Recent posts from scholars' own Substacks, written by
+  // scripts/export_ces_substack.py (a separate step from the press export).
+  const posts = [...(mediaContent.substack_posts || [])]
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  renderWorkList(
+    document.getElementById('substack-posts-list'),
+    posts,
+    substackPostHtml,
+    'No recent newsletter posts.'
+  );
+
+  // Press coverage, written by scripts/export_ces_press.py in the agora_media
+  // repo after each daily digest run. Split into a featured band (major
+  // national/international outlets, flagged `featured` by the exporter's
+  // editable PRESTIGE_SOURCES list) and everything else. Newest first in both.
+  const byDate = (a, b) => String(b.date || '').localeCompare(String(a.date || ''));
+  const allPress = [...(mediaContent.press || [])].sort(byDate);
+
+  renderWorkList(
+    document.getElementById('press-featured-list'),
+    allPress.filter(p => p.featured),
+    pressItemHtml,
+    'No featured coverage yet.'
+  );
+  renderWorkList(
+    document.getElementById('press-more-list'),
+    allPress.filter(p => !p.featured),
+    pressItemHtml,
+    'No further coverage yet.'
+  );
+}
+
+// Fills one .work-list container, or shows an empty state, and registers the
+// new rows with the scroll-reveal observer.
+function renderWorkList(el, items, renderer, emptyMsg) {
+  if (!el) return;
+  el.removeAttribute('data-loading');
+  el.innerHTML = items.length
+    ? items.map(renderer).join('')
+    : `<p class="empty-state">${emptyMsg}</p>`;
+  observeRevealTargets(el.querySelectorAll('.work-item'));
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────────
