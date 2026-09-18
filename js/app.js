@@ -731,6 +731,29 @@ function newsletterItemHtml(nl) {
   `;
 }
 
+// Featured coverage renders as a pop-out card, not a list row: these are the
+// prestige outlets and the page leads with them. The whole card is one link,
+// so the outlet, headline and byline are all part of its accessible name.
+function featuredPressHtml(item) {
+  const names = (item.scholar_ids || [])
+    .map(id => {
+      const p = people.find(x => x.id === id);
+      return p ? p.name : null;
+    })
+    .filter(Boolean);
+  return `
+    <a class="feature-card" href="${escAttr(item.url)}" target="_blank" rel="noopener">
+      <span class="feature-card__source">${escHtml(item.source || '')}</span>
+      <span class="feature-card__title">${escHtml(item.title)}</span>
+      <span class="feature-card__foot">
+        ${names.length ? `<span class="feature-card__who">${escHtml(names.join(', '))}</span>` : ''}
+        <span class="feature-card__date">${escHtml(formatPressDate(item.date))}</span>
+      </span>
+      <span class="feature-card__cue" aria-hidden="true">↗</span>${newTabHintHtml()}
+    </a>
+  `;
+}
+
 // Renders one press-mention row. Unlike talks (curated by hand), these come
 // from the daily media digest export, so a story can name several CES
 // scholars — each gets its own link back to their page.
@@ -848,7 +871,7 @@ function buildMedia() {
   renderWorkList(
     document.getElementById('press-featured-list'),
     allPress.filter(p => p.featured),
-    pressItemHtml,
+    featuredPressHtml,
     'No featured coverage yet.'
   );
   renderWorkList(
@@ -867,7 +890,7 @@ function renderWorkList(el, items, renderer, emptyMsg) {
   el.innerHTML = items.length
     ? items.map(renderer).join('')
     : `<p class="empty-state">${emptyMsg}</p>`;
-  observeRevealTargets(el.querySelectorAll('.work-item'));
+  observeRevealTargets(el.querySelectorAll('.work-item, .feature-card'));
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────────
