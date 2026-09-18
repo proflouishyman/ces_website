@@ -980,6 +980,9 @@ h1.section-divider__title { font-size: var(--fs-h1); }
 .work-item--newsletter .work-item__badge { background: var(--teal); color: var(--navy); }
 .work-item--link .work-item__badge       { background: var(--skyblue); color: var(--navy); }
 .work-item--talk .work-item__badge       { background: var(--darkteal); }
+/* Press mentions come from the daily media digest (see agora_media). */
+.work-item--press .work-item__badge      { background: var(--blue); }
+.work-item--substack .work-item__badge   { background: var(--teal); color: var(--navy); }
 
 .work-item__content { min-width: 0; }
 
@@ -1245,6 +1248,37 @@ h1.section-divider__title { font-size: var(--fs-h1); }
 .pub-card.is-dated:focus-within {
   /* Base is now 0.9, so hover/focus goes to full to keep the brighten-on-interaction cue. */
   opacity: 1;
+}
+
+/* Media page: two-column band under the featured coverage. Collapses to a
+   single column below the tablet breakpoint so the columns never get narrow
+   enough to break 1.4.10 reflow at 320px. */
+.media-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+.media-column__head {
+  padding-block: 0 1rem;
+}
+/* Column headings sit inside a band, not at page level, so they take the
+   smaller h2 size rather than --fs-h1. */
+.media-column__title {
+  font-size: var(--fs-h3);
+}
+.media-column .work-item:first-child {
+  padding-top: 0;
+}
+
+@media (max-width: 900px) {
+  .media-columns {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .media-column + .media-column .media-column__head {
+    padding-top: var(--band-pad);
+  }
 }
 
 /* --------------------------------------------------------------------------
