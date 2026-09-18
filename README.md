@@ -2,9 +2,15 @@
 
 **Live site:** https://proflouishyman.github.io/ces_website/
 
-A static site (plain HTML/CSS/JS, no build step) for the CES at the SNF Agora Institute, Johns Hopkins University. All content is data-driven: the pages are rendered at runtime by `js/app.js` from two JSON files in `data/`.
+A static site (plain HTML/CSS/JS, no build step) for the CES at the SNF Agora Institute, Johns Hopkins University. All content is data-driven: the pages are rendered at runtime by `js/app.js` from three JSON files in `data/` (`people.json`, `site-content.json`, `media.json`).
 
-See `DESIGN_SPEC.md` for the design system and component contract (CSS classes, layout rules, etc.) — that document is for anyone touching the visual design or JS. This section is for content-only edits.
+Three documents, three jobs:
+
+- **`docs/plan.md`** — how the site works and the constraints a change must respect (no build step, data flow, accessibility contracts, what's automated). Read this before changing structure or behaviour.
+- **`DESIGN_SPEC.md`** — the design system and component contract (brand tokens, CSS classes, layout rules). Read this before changing how anything looks.
+- **This file** — how to edit content. If you only need to add a scholar or a talk, you need nothing else.
+
+Note that `media.json`'s `press` and `substack_posts` arrays are **written automatically** by the SNF Agora media digest each morning — don't hand-edit them (see `docs/plan.md` §3).
 
 ## Site structure & routing
 
