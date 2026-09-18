@@ -25,6 +25,19 @@
   --olive:     #d2d857;
   --teal:      #00a98e;
   --darkteal:  #093d49;
+  /* Accessible text variant of --teal. The brand teal is only 2.97:1 on white,
+     failing WCAG 2.1 AA (4.5:1) for the small uppercase labels it is used on.
+     This is an ALIAS of the existing --darkteal token, not a new colour: it keeps
+     the teal family and measures 11.83:1 on white / 10.63:1 on --offwhite.
+     Use --teal for borders and accents on dark grounds; --teal-text for text on light. */
+  --teal-text: var(--darkteal);
+  /* Focus ring is TWO-TONE on purpose. No single colour clears the 1.4.11 3:1
+     non-text minimum against every ground this site uses: --skyblue failed on
+     white (2.44:1) and a mid-blue failed on --darkteal (2.78:1) and --olive.
+     A dark core plus a white outer halo means at least one of the two always
+     has contrast — worst case 5.70:1 (navy core on --teal). */
+  --focus-ring: var(--navy);
+  --focus-ring-halo: var(--white);
   --offwhite:  #f0f3f7;
   --lightgray: #eaeaea;
   --white:     #ffffff;
@@ -95,8 +108,11 @@ button {
 
 /* Global focus ring — brand contract, applies everywhere */
 :focus-visible {
-  outline: 3px solid var(--skyblue);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
+  /* The halo sits in the outline-offset gap, so the indicator stays visible
+     whether the element is on a light or a dark band. */
+  box-shadow: 0 0 0 2px var(--focus-ring-halo), 0 0 0 6px var(--focus-ring);
 }
 
 .container {
@@ -117,8 +133,11 @@ button {
   font-weight: 500;
   color: var(--blue);
 }
-.eyebrow--teal  { color: var(--teal); }
+.eyebrow--teal  { color: var(--teal-text); }
 .eyebrow--olive { color: var(--navy); background: var(--olive); padding: 0.15em 0.5em; border-radius: 3px; display: inline-block; }
+/* --skyblue is legible on the dark footer (4.86:1) but only 2.43:1 on white,
+   and this modifier is used on both. Default to the dark-ground value and
+   override it for the light-card context below. */
 .eyebrow--sky   { color: var(--skyblue); }
 .eyebrow--navy  { color: var(--navy); }
 
@@ -153,9 +172,43 @@ button {
   transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background 0.2s var(--ease);
 }
 .link-chip:hover {
-  border-color: var(--teal);
-  color: var(--teal);
+  border-color: var(--teal-text);
+  color: var(--teal-text);
   background: var(--offwhite);
+}
+
+/* Role filter (people.html). These buttons had no styles at all: every state
+   rendered as identical default browser text, so sighted users could not tell
+   which filter was active even though aria-pressed was correct (WCAG 1.4.1).
+   The selected state carries weight + fill + border, not colour alone. */
+.role-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-block: 0 1.5rem;
+}
+.role-filter__btn {
+  font-family: var(--font-label);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--navy);
+  background: var(--white);
+  border: 1.5px solid var(--lightgray);
+  border-radius: var(--radius-pill);
+  padding: 0.5em 1.1em;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.role-filter__btn:hover {
+  border-color: var(--blue);
+  background: var(--offwhite);
+}
+.role-filter__btn.is-active,
+.role-filter__btn[aria-pressed="true"] {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+  font-weight: 600;
 }
 
 .page-head {
@@ -283,7 +336,9 @@ button {
   background: var(--blue);
 }
 .avatar--tile.avatar--blue     { background: var(--blue); }
-.avatar--tile.avatar--teal     { background: var(--teal); }
+/* --teal-text, not --teal: these tiles carry white initials, and white on the
+   brand teal is 2.97:1 (fails AA). On --teal-text it is 5.08:1. */
+.avatar--tile.avatar--teal     { background: var(--teal-text); }
 .avatar--tile.avatar--darkteal { background: var(--darkteal); }
 .avatar--tile.avatar--navy     { background: var(--navy); }
 
@@ -309,14 +364,11 @@ button {
   align-items: center;
   justify-content: center;
 }
-[data-no-photo]::after {
-  content: attr(data-initials);
-  font-family: var(--font-label);
-  color: var(--white);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
+/* No ::after fallback here on purpose. avatarHtml() is the only thing that emits
+   [data-no-photo] and it always includes an explicit <span class="avatar__initials">,
+   so a generated-content copy rendered the initials twice ("HHHH"). Styling lives on
+   .avatar__initials instead — which is also the more accessible of the two, since
+   CSS generated content is not reliably exposed to assistive tech. */
 
 /* --------------------------------------------------------------------------
    6. Site Header / Masthead
@@ -341,6 +393,21 @@ button {
 }
 .skip-link:focus {
   top: 0;
+}
+
+/* Visually hidden but exposed to assistive tech: used for live-region status
+   text and for "(opens in a new tab)" warnings. Deliberately not display:none
+   or visibility:hidden, which would remove it from the accessibility tree. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .site-header {
@@ -375,7 +442,7 @@ button {
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--teal);
+  color: var(--teal-text);
   font-weight: 500;
 }
 
@@ -482,7 +549,12 @@ button {
 }
 
 .hero__eyebrow {
-  color: var(--skyblue);
+  /* NOT --skyblue. .hero__bg layers a rgba(104,172,229,0.35) radial glow at 15% 20%
+     — the same hue as --skyblue — directly under this text, so the token drops to
+     3.24:1 against its own glow (35.7% of the text area below 4.5:1). axe reports
+     this only as "incomplete" because it cannot resolve gradient backgrounds.
+     --offwhite holds 7.10:1 against the worst pixel of that gradient. */
+  color: var(--offwhite);
   margin-bottom: 1.25rem;
 }
 
@@ -551,6 +623,10 @@ button {
   margin-bottom: 1rem;
 }
 .section-divider__title.is-italic { font-style: italic; }
+/* On programs.html this element is the page's <h1>, so it must not render
+   smaller than the <h2>s further down the page. Scoped to the h1 only —
+   every other .section-divider__title stays at --fs-h2. */
+h1.section-divider__title { font-size: var(--fs-h1); }
 
 .section-divider__intro {
   max-width: var(--maxw-read);
@@ -669,11 +745,18 @@ button {
   transform: translate(-4px, 4px);
   transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
 }
-.focus-card:hover .focus-card__cue {
+/* --blue, not --skyblue: the glyph is white, and white on --skyblue is 2.44:1
+   (fails AA and the 3:1 non-text floor). White on --blue is 12.98:1. */
+/* :focus-within and :focus-visible are not optional here — the cue is opacity:0
+   at rest, so without them a keyboard user focuses a real link and sees nothing
+   at all on screen, focus ring included (WCAG 2.4.7). */
+.focus-card:hover .focus-card__cue,
+.focus-card:focus-within .focus-card__cue,
+.focus-card__cue:focus-visible {
   opacity: 1;
   transform: translate(0,0);
-  background: var(--skyblue);
-  border-color: var(--skyblue);
+  background: var(--blue);
+  border-color: var(--blue);
   color: var(--white);
 }
 
@@ -743,7 +826,7 @@ button {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--teal);
+  color: var(--teal-text);
   font-weight: 500;
   margin-top: 0.5rem;
 }
@@ -867,10 +950,14 @@ button {
   transition: opacity 0.2s var(--ease);
 }
 .work-item:first-child { padding-top: 0; }
-.work-item:hover .work-item__title { color: var(--blue); }
-.work-item:hover .work-item__cue {
-  background: var(--skyblue);
-  border-color: var(--skyblue);
+.work-item:hover .work-item__title,
+.work-item:focus-within .work-item__title { color: var(--blue); }
+/* See .focus-card__cue: white on --skyblue is 2.44:1. */
+.work-item:hover .work-item__cue,
+.work-item:focus-within .work-item__cue,
+.work-item__cue:focus-visible {
+  background: var(--blue);
+  border-color: var(--blue);
   color: var(--white);
 }
 
@@ -908,8 +995,10 @@ button {
 .work-item__meta {
   font-family: var(--font-body);
   font-size: var(--fs-small);
+  /* --blue at full strength rather than the old opacity: 0.75. Opacity here
+     compounded with .is-dated's own opacity and dropped this text to 3.56:1
+     (WCAG 1.4.3 needs 4.5:1). The token flat is 12.98:1 on white. */
   color: var(--blue);
-  opacity: 0.75;
   margin-bottom: 0.4rem;
 }
 
@@ -1039,12 +1128,15 @@ button {
   flex-grow: 1;
 }
 
+/* These cards sit on white, where --skyblue is 2.43:1. --blue is 12.98:1. */
+.activity-card__eyebrow.eyebrow--sky { color: var(--blue); }
+
 .activity-card__meta {
   font-family: var(--font-label);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--teal);
+  color: var(--teal-text);
 }
 
 .activity-card__cta {
@@ -1124,25 +1216,35 @@ button {
 
 .pub-card__cue {
   margin-top: auto;
-  color: var(--teal);
+  color: var(--teal-text);
   font-family: var(--font-label);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Older-than-2-years de-emphasis (see app.js isDated()) — dimmed, not
-   hidden, so nothing disappears from the record, and full-strength on
-   hover/focus so it stays readable and keyboard-accessible. */
+/* Older-than-2-years de-emphasis (see app.js isDated()) — dimmed, not hidden,
+   so nothing disappears from the record, and full-strength on hover/focus.
+   NOTE: this rule is currently DORMANT. .work-item.is-in / .pub-card.is-in (see
+   the scroll-reveal block near the end of this file) set opacity: 1 with equal
+   specificity and appear later in the source, so they win, and every .is-dated
+   item actually renders at full opacity. That has always been true.
+   The value below is kept at an accessible level rather than the original 0.55
+   so that if the ordering is ever fixed the rule does not reintroduce a contrast
+   failure: opacity dims the whole subtree, and the floor is set by the lowest-
+   contrast descendant (.work-item__meta, --blue). At 0.55 that text fell to
+   3.42:1, failing WCAG 1.4.3; at 0.9 it holds at 10.81:1.
+   Reviving the feature is a design decision, not an accessibility one. */
 .work-item.is-dated,
 .pub-card.is-dated {
-  opacity: 0.55;
+  opacity: 0.9;
 }
 .work-item.is-dated:hover,
 .work-item.is-dated:focus-within,
 .pub-card.is-dated:hover,
 .pub-card.is-dated:focus-within {
-  opacity: 0.9;
+  /* Base is now 0.9, so hover/focus goes to full to keep the brighten-on-interaction cue. */
+  opacity: 1;
 }
 
 /* --------------------------------------------------------------------------
@@ -1211,18 +1313,22 @@ button {
   max-width: 780px;
 }
 
+/* Inherits the parent paragraph's opacity: 0.75, which drags --skyblue down to
+   3.42:1 on --darkteal. --offwhite composites to 6.72:1 at that same opacity and
+   stays on-palette; the underline keeps the link distinguishable without colour. */
 .site-footer__attribution-link {
-  color: var(--skyblue);
+  color: var(--offwhite);
   text-decoration: underline;
-  text-decoration-color: rgba(104,172,229,0.4);
+  text-decoration-color: rgba(240,243,247,0.5);
 }
-.site-footer__attribution-link:hover { text-decoration-color: var(--skyblue); }
+.site-footer__attribution-link:hover { text-decoration-color: var(--offwhite); }
 
 .site-footer__legal {
   grid-column: 1 / -1;
   font-size: 0.8rem;
   color: var(--offwhite);
-  opacity: 0.55;
+  /* 0.55 composited to 4.35:1 on --darkteal, just under the 4.5:1 AA floor. */
+  opacity: 0.75;
   margin-top: 1rem;
 }
 

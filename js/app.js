@@ -10,27 +10,78 @@
 let people = [];
 let siteContent = null;
 let mediaContent = null;
+let dataLoadFailed = false;
+const failedData = { people: false, site: false, media: false };
 let activeRoleFilter = 'all';
 
 // ── DATA LOAD ────────────────────────────────────────────────
 
+// Each dataset loads independently: a failure in one must not blank the others.
+// (With a single Promise.all + shared catch, media.json 404ing also wiped the
+// scholar roster, because the catch reset `people` to [].)
+async function fetchJson(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
+  return res.json();
+}
+
 async function loadData() {
-  try {
-    const [pRes, sRes, mRes] = await Promise.all([
-      fetch('data/people.json'),
-      fetch('data/site-content.json'),
-      fetch('data/media.json'),
-    ]);
-    people = await pRes.json();
-    siteContent = await sRes.json();
-    mediaContent = await mRes.json();
-  } catch (e) {
-    console.error('Could not load CES site data:', e);
-    people = people || [];
-    siteContent = siteContent || null;
-    mediaContent = mediaContent || null;
-  }
+  const [pRes, sRes, mRes] = await Promise.allSettled([
+    fetchJson('data/people.json'),
+    fetchJson('data/site-content.json'),
+    fetchJson('data/media.json'),
+  ]);
+
+  if (pRes.status === 'fulfilled') people = pRes.value;
+  else { console.error('Could not load people.json:', pRes.reason); people = []; failedData.people = true; }
+
+  if (sRes.status === 'fulfilled') siteContent = sRes.value;
+  else { console.error('Could not load site-content.json:', sRes.reason); siteContent = null; failedData.site = true; }
+
+  if (mRes.status === 'fulfilled') mediaContent = mRes.value;
+  else { console.error('Could not load media.json:', mRes.reason); mediaContent = null; failedData.media = true; }
+
+  dataLoadFailed = failedData.people || failedData.site || failedData.media;
+
   init();
+  if (dataLoadFailed) renderLoadError();
+}
+
+// A failed fetch otherwise renders as the ordinary empty state ("No scholars
+// match this filter."), which tells the reader the center has no scholars
+// rather than that the page is broken. This replaces any still-empty container
+// with a real error message and announces it once (WCAG 4.1.3).
+function renderLoadError() {
+  const msg = 'Sorry — this content could not be loaded. Please refresh the page or try again later.';
+  // Every container a builder fills, on every page — an omission here is worse than
+  // no handling at all, because the page then shows either nothing (about.html) or
+  // an affirmatively wrong answer ("We couldn't find that scholar" on person.html,
+  // when in fact the roster never loaded).
+  const SELECTORS = [
+    '[data-loading]', '.person-grid', '.work-list', '.focus-grid', '.activity-grid',
+    '.pub-grid__track', '#about-meta', '#person-detail-root',
+  ].join(', ');
+
+  document.querySelectorAll(SELECTORS).forEach(el => {
+    // A container counts as filled only if it holds something OTHER than an empty
+    // state — and not merely an empty wrapper div, which buildPublicationsFeed
+    // writes even when it has no cards (that rendered as a silent 0px blank).
+    const real = [...el.children].some(
+      c => !c.classList.contains('empty-state') && c.textContent.trim() !== ''
+    );
+    if (real) return;
+    el.removeAttribute('data-loading');
+    el.innerHTML = `<p class="empty-state">${msg}</p>`;
+  });
+
+  announce(msg);
+}
+
+// Posts a message to this page's polite live region, if it has one.
+function announce(msg) {
+  const status = document.getElementById('page-status') ||
+                 document.getElementById('person-grid-status');
+  if (status) status.textContent = msg;
 }
 
 function init() {
@@ -98,6 +149,20 @@ function initialsOf(name) {
   const first = parts[0][0] || '';
   const last = parts[parts.length - 1][0] || '';
   return (first + last).toUpperCase();
+}
+
+// Screen-reader-only "(opens in a new tab)" hint for links that leave the site
+// (WCAG 3.2.5). Returned as a node so it survives textContent rewrites.
+function newTabHint() {
+  const s = document.createElement('span');
+  s.className = 'visually-hidden';
+  s.textContent = ' (opens in a new tab)';
+  return s;
+}
+
+// Returns the same hint as an HTML string, for template-literal markup.
+function newTabHintHtml() {
+  return '<span class="visually-hidden"> (opens in a new tab)</span>';
 }
 
 // Renders the .avatar element (img or fallback tile) for a person, at a given size class.
@@ -174,7 +239,7 @@ function buildPeopleGrid() {
         ${avatarHtml(p, 'avatar--md')}
       </div>
       <div class="person-card__body">
-        <h3 class="person-card__name">${escHtml(p.name)}</h3>
+        <h2 class="person-card__name">${escHtml(p.name)}</h2>
         <p class="person-card__title">${escHtml(p.title || '')}</p>
         <div class="person-card__tags">${focusTagsHtml(p)}</div>
         ${workCue(p) ? `<p class="person-card__workcue">${escHtml(workCue(p))}</p>` : ''}
@@ -188,9 +253,28 @@ function buildPeopleGrid() {
 function setRoleFilter(role) {
   activeRoleFilter = role;
   document.querySelectorAll('[data-role-filter]').forEach(btn => {
-    btn.classList.toggle('is-active', btn.dataset.roleFilter === role);
+    const isActive = btn.dataset.roleFilter === role;
+    btn.classList.toggle('is-active', isActive);
+    // .is-active is styling only; aria-pressed is what conveys the selected
+    // state to assistive tech (WCAG 4.1.2).
+    btn.setAttribute('aria-pressed', String(isActive));
   });
   buildPeopleGrid();
+  announcePeopleCount();
+}
+
+// The grid is swapped out silently on filter, so screen reader users get no
+// signal that anything changed. This posts the new result count to a polite
+// live region (WCAG 4.1.3).
+function announcePeopleCount() {
+  const status = document.getElementById('person-grid-status');
+  if (!status) return;
+  const count = activeRoleFilter === 'all'
+    ? people.length
+    : people.filter(p => p.role === activeRoleFilter).length;
+  const label = document.querySelector(`[data-role-filter="${activeRoleFilter}"]`);
+  const name = label ? label.textContent.trim() : activeRoleFilter;
+  status.textContent = `${count} ${count === 1 ? 'scholar' : 'scholars'} shown in ${name}.`;
 }
 
 // ── PERSON DETAIL (person.html) ──────────────────────────────
@@ -207,14 +291,30 @@ function buildPersonDetail() {
   const p = people.find(x => x.id === id);
 
   if (!p) {
-    root.innerHTML = `
+    // Distinguish "this id isn't in the roster" from "the roster never loaded" —
+    // the second is a site error, and telling the reader the person doesn't exist
+    // is an affirmatively wrong answer (WCAG 4.1.3).
+    const rosterMissing = failedData.people || !people.length;
+    root.innerHTML = rosterMissing
+      ? `
+      <div class="container" style="padding-block: var(--band-pad);">
+        <p class="page-head__eyebrow eyebrow eyebrow--teal">Something went wrong</p>
+        <h1 class="page-head__title">This page could not be loaded</h1>
+        <p class="page-head__intro">Sorry — our scholar directory could not be loaded just now. Please refresh the page or try again later.</p>
+        <a class="btn btn--pill" href="people.html">Back to all scholars<span class="btn__arrow">→</span></a>
+      </div>
+    `
+      : `
       <div class="container" style="padding-block: var(--band-pad);">
         <p class="page-head__eyebrow eyebrow eyebrow--teal">Scholar not found</p>
-        <h2 class="page-head__title">We couldn't find that scholar</h2>
+        <h1 class="page-head__title">We couldn't find that scholar</h1>
         <p class="page-head__intro">They may have moved or the link may be out of date.</p>
         <a class="btn btn--pill" href="people.html">Back to all scholars<span class="btn__arrow">→</span></a>
       </div>
     `;
+    announce(rosterMissing
+      ? 'Sorry — this page could not be loaded. Please refresh the page or try again later.'
+      : 'Scholar not found.');
     return;
   }
 
@@ -223,9 +323,9 @@ function buildPersonDetail() {
   const focusTags = (p.topics || []).map(t => `<span class="tag tag--focus">${escHtml(t)}</span>`).join('');
 
   const linkChips = [
-    p.personal_website ? `<a class="link-chip" href="${escAttr(p.personal_website)}" target="_blank" rel="noopener">Website ↗</a>` : '',
-    p.directory_url ? `<a class="link-chip" href="${escAttr(p.directory_url)}" target="_blank" rel="noopener">Directory ↗</a>` : '',
-    p.substack ? `<a class="link-chip" href="${escAttr(p.substack.url)}" target="_blank" rel="noopener">${escHtml(p.substack.name || 'Newsletter')} ↗</a>` : '',
+    p.personal_website ? `<a class="link-chip" href="${escAttr(p.personal_website)}" target="_blank" rel="noopener">Website ↗${newTabHintHtml()}</a>` : '',
+    p.directory_url ? `<a class="link-chip" href="${escAttr(p.directory_url)}" target="_blank" rel="noopener">Directory ↗${newTabHintHtml()}</a>` : '',
+    p.substack ? `<a class="link-chip" href="${escAttr(p.substack.url)}" target="_blank" rel="noopener">${escHtml(p.substack.name || 'Newsletter')} ↗${newTabHintHtml()}</a>` : '',
   ].filter(Boolean).join('');
 
   root.innerHTML = `
@@ -295,7 +395,7 @@ function workSectionHtml(p) {
             <h3 class="work-item__title">Read ${escHtml(p.name)}'s work</h3>
             <p class="work-item__meta">${escHtml(p.institution || '')}</p>
           </div>
-          <span class="work-item__cue">↗</span>
+          <span class="work-item__cue">↗</span>${newTabHintHtml()}
         </a>
       `);
       count = 1;
@@ -315,7 +415,7 @@ function workSectionHtml(p) {
   return `
     <section class="work-section" aria-labelledby="work-h-${escAttr(p.id)}">
       <div class="work-section__head">
-        <p class="work-section__eyebrow eyebrow" id="work-h-${escAttr(p.id)}">Selected Work &amp; Writing</p>
+        <h2 class="work-section__eyebrow eyebrow" id="work-h-${escAttr(p.id)}">Selected Work &amp; Writing</h2>
         <span class="work-section__count">${count} work${count === 1 ? '' : 's'}</span>
       </div>
       <div class="work-list">${items.join('')}</div>
@@ -331,16 +431,28 @@ function workItemHtml(item, type) {
   const meta = [item.venue, item.year].filter(Boolean).join(' · ');
   const cover = item.cover ? `<img class="work-item__cover" src="${escAttr(item.cover)}" alt="" loading="lazy">` : '';
   const dated = isDated(item.year) ? ' is-dated' : '';
-  return `
-    <a class="work-item work-item--${modifier}${dated}" href="${escAttr(item.url)}" target="_blank" rel="noopener">
+  const inner = `
       <span class="work-item__badge">${escHtml(badge)}</span>
       <div class="work-item__content">
         <h3 class="work-item__title">${escHtml(item.title)}</h3>
         ${meta ? `<p class="work-item__meta">${escHtml(meta)}</p>` : ''}
         ${item.note ? `<p class="work-item__note">${escHtml(item.note)}</p>` : ''}
         ${cover}
-      </div>
-      <span class="work-item__cue">↗</span>
+      </div>`;
+
+  // Several records in people.json have "url": null. Rendering those as <a href="">
+  // produced a focusable link that reloaded the current page (WCAG 2.4.4 / 2.1.1),
+  // so an entry without a URL is rendered as a plain, non-interactive row.
+  if (!item.url) {
+    return `
+    <div class="work-item work-item--${modifier}${dated}">${inner}
+    </div>
+  `;
+  }
+
+  return `
+    <a class="work-item work-item--${modifier}${dated}" href="${escAttr(item.url)}" target="_blank" rel="noopener">${inner}
+      <span class="work-item__cue">↗</span>${newTabHintHtml()}
     </a>
   `;
 }
@@ -352,13 +464,13 @@ function personAsideHtml(p) {
     <aside class="person-aside">
       ${p.bio ? `
         <div class="person-aside__section">
-          <span class="person-aside__head">About</span>
+          <h2 class="person-aside__head">About</h2>
           <p class="person-aside__bio">${escHtml(p.bio)}</p>
         </div>
       ` : ''}
       ${topics.length ? `
         <div class="person-aside__section">
-          <span class="person-aside__head">Focus Areas</span>
+          <h2 class="person-aside__head">Focus Areas</h2>
           <div class="person-aside__list">
             ${topics.map(t => `<p class="person-aside__list-item">${escHtml(t)}</p>`).join('')}
           </div>
@@ -393,7 +505,7 @@ function buildPublicationsFeed() {
       return `
         <a class="pub-card work-item--${modifier}${dated}" href="${personLink(pub.personId)}">
           <span class="pub-card__badge">${escHtml(badge)}</span>
-          <h3 class="pub-card__title">${escHtml(pub.title)}</h3>
+          <h2 class="pub-card__title">${escHtml(pub.title)}</h2>
           <p class="pub-card__author">${escHtml(pub.personName)}</p>
           <p class="pub-card__meta">${escHtml([pub.venue, pub.year].filter(Boolean).join(' · '))}</p>
           <span class="pub-card__cue">Read →</span>
@@ -408,7 +520,7 @@ function buildPublicationsFeed() {
     cardsHtml = linkRich.map(p => `
       <a class="pub-card work-item--link" href="${personLink(p.id)}">
         <span class="pub-card__badge">Profile</span>
-        <h3 class="pub-card__title">${escHtml(p.name)}</h3>
+        <h2 class="pub-card__title">${escHtml(p.name)}</h2>
         <p class="pub-card__author">${escHtml(p.institution || '')}</p>
         <p class="pub-card__meta">Read their work ↗</p>
       </a>
@@ -458,7 +570,7 @@ function focusCardHtml(area, i) {
   const extra = scholars.length - shown.length;
   return `
     <div class="focus-card" data-focus-index="${i}">
-      <h3 class="focus-card__title">${escHtml(area.title)}</h3>
+      <h2 class="focus-card__title">${escHtml(area.title)}</h2>
       <p class="focus-card__desc">${escHtml(area.description || '')}</p>
       <div class="focus-card__scholars">
         ${shown.map(s => `<a href="${personLink(s.id)}">${avatarHtml(s, 'avatar--xs avatar--tile')}</a>`).join('')}
@@ -475,9 +587,9 @@ function activityCardHtml(item, modifier, eyebrowLabel) {
   return `
     <article class="activity-card activity-card--${modifier}">
       <p class="activity-card__eyebrow eyebrow eyebrow--sky">${escHtml(eyebrowLabel)}</p>
-      <h3 class="activity-card__title">${escHtml(item.name)}</h3>
+      <h2 class="activity-card__title">${escHtml(item.name)}</h2>
       <p class="activity-card__desc">${escHtml(item.description || '')}</p>
-      ${item.url ? `<a class="activity-card__cta btn btn--pill--ghost" href="${escAttr(item.url)}" target="_blank" rel="noopener">Learn more<span class="btn__arrow">→</span></a>` : ''}
+      ${item.url ? `<a class="activity-card__cta btn btn--pill--ghost" href="${escAttr(item.url)}" target="_blank" rel="noopener">Learn more<span class="btn__arrow">→</span>${newTabHintHtml()}</a>` : ''}
     </article>
   `;
 }
@@ -518,7 +630,7 @@ function buildAbout() {
 
   el.innerHTML = `
     <div class="person-aside__section">
-      <span class="person-aside__head">Leadership</span>
+      <h2 class="person-aside__head">Leadership</h2>
       <div class="person-aside__list">
         ${about.director ? `<p class="person-aside__list-item">Director: ${escHtml(about.director)}</p>` : ''}
         ${about.associate_director ? `<p class="person-aside__list-item">Associate Director: ${escHtml(about.associate_director)}</p>` : ''}
@@ -527,7 +639,7 @@ function buildAbout() {
     </div>
     ${about.funding_sources?.length ? `
       <div class="person-aside__section">
-        <span class="person-aside__head">Funding</span>
+        <h2 class="person-aside__head">Funding</h2>
         <div class="person-aside__list">
           ${about.funding_sources.map(f => `<p class="person-aside__list-item">${escHtml(f)}</p>`).join('')}
         </div>
@@ -535,7 +647,7 @@ function buildAbout() {
     ` : ''}
     ${about.connected_networks?.length ? `
       <div class="person-aside__section">
-        <span class="person-aside__head">Connected Networks</span>
+        <h2 class="person-aside__head">Connected Networks</h2>
         <div class="person-aside__list">
           ${about.connected_networks.map(n => `<p class="person-aside__list-item">${escHtml(n)}</p>`).join('')}
         </div>
@@ -543,7 +655,7 @@ function buildAbout() {
     ` : ''}
     ${about.parent_institute ? `
       <div class="person-aside__section">
-        <span class="person-aside__head">Parent Institute</span>
+        <h2 class="person-aside__head">Parent Institute</h2>
         <p class="person-aside__bio">${escHtml(about.parent_institute)}</p>
       </div>
     ` : ''}
@@ -561,7 +673,10 @@ function buildFooterNewsletter() {
   if (!link || !siteContent) return;
   const nl = siteContent.newsletter;
   if (!nl) return;
+  // textContent would wipe the visually-hidden "(opens in a new tab)" span that
+  // the static markup carries for WCAG 3.2.5, so rebuild the label and re-append it.
   link.textContent = `${nl.label || 'Join our mailing list'} →`;
+  link.appendChild(newTabHint());
   if (nl.form_url) link.href = nl.form_url;
 }
 
@@ -585,14 +700,14 @@ function talkItemHtml(talk) {
     <div class="work-item work-item--talk${dated}">
       <span class="work-item__badge">Talk</span>
       <div class="work-item__content">
-        <h3 class="work-item__title"><a href="${escAttr(talk.url)}" target="_blank" rel="noopener">${escHtml(talk.title)}</a></h3>
+        <h2 class="work-item__title"><a href="${escAttr(talk.url)}" target="_blank" rel="noopener">${escHtml(talk.title)}${newTabHintHtml()}</a></h2>
         <p class="work-item__meta">
           ${scholar ? `<a href="${personLink(scholar.id)}">${escHtml(scholarName)}</a>` : escHtml(scholarName)}
           ${meta ? ` · ${escHtml(meta)}` : ''}
         </p>
         ${cover}
       </div>
-      <a class="work-item__cue" href="${escAttr(talk.url)}" target="_blank" rel="noopener" aria-label="Watch ${escAttr(talk.title)}">↗</a>
+      <a class="work-item__cue" href="${escAttr(talk.url)}" target="_blank" rel="noopener" aria-label="Watch ${escAttr(talk.title)} (opens in a new tab)">↗</a>
     </div>
   `;
 }
@@ -606,12 +721,12 @@ function newsletterItemHtml(nl) {
     <div class="work-item work-item--newsletter">
       <span class="work-item__badge">Newsletter</span>
       <div class="work-item__content">
-        <h3 class="work-item__title"><a href="${escAttr(nl.url)}" target="_blank" rel="noopener">${escHtml(nl.name)}</a></h3>
+        <h2 class="work-item__title"><a href="${escAttr(nl.url)}" target="_blank" rel="noopener">${escHtml(nl.name)}${newTabHintHtml()}</a></h2>
         <p class="work-item__meta">
           ${scholar ? `<a href="${personLink(scholar.id)}">${escHtml(scholarName)}</a>` : escHtml(scholarName)}
         </p>
       </div>
-      <a class="work-item__cue" href="${escAttr(nl.url)}" target="_blank" rel="noopener" aria-label="Read ${escAttr(nl.name)}">↗</a>
+      <a class="work-item__cue" href="${escAttr(nl.url)}" target="_blank" rel="noopener" aria-label="Read ${escAttr(nl.name)} (opens in a new tab)">↗</a>
     </div>
   `;
 }
@@ -692,16 +807,53 @@ function setupEventListeners() {
   const toggle = document.querySelector('.site-header__toggle');
   const nav = document.querySelector('.site-header__nav');
   if (toggle && nav) {
+    const setNav = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.setAttribute('data-open', String(open));
+      // The nav sits BEFORE the toggle in DOM order, so after opening the menu a
+      // forward Tab would skip straight past every link into the page body. Move
+      // focus to the first link so the menu is actually traversable (WCAG 2.4.3).
+      if (open) {
+        const first = nav.querySelector('a');
+        if (first) first.focus();
+      }
+    };
+    // Closes the menu and puts focus back on the toggle. Without the focus
+    // return, dismissing the menu strands keyboard focus on a now-hidden
+    // link and the user restarts from the top of the document (WCAG 2.4.3).
+    const closeNav = ({ refocus = false } = {}) => {
+      setNav(false);
+      if (refocus) toggle.focus();
+    };
+
     toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!isOpen));
-      nav.setAttribute('data-open', String(!isOpen));
+      setNav(toggle.getAttribute('aria-expanded') !== 'true');
     });
+
+    // Tabbing past the last link (or Shift+Tabbing before the first) used to leave
+    // focus on page content while this opaque full-width overlay stayed open on top
+    // of it — the focused element's ring ended up partly behind the panel, and focus
+    // could leave the document entirely with the menu still open. Closing as soon as
+    // focus leaves the header keeps focus and the visible overlay in sync
+    // (WCAG 2.4.3 Focus Order, 2.4.7 Focus Visible).
+    const headerInner = toggle.closest('.site-header__inner') || nav.parentElement;
+    headerInner.addEventListener('focusout', (e) => {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      // relatedTarget is where focus is going; null means it left the document.
+      if (e.relatedTarget && headerInner.contains(e.relatedTarget)) return;
+      closeNav();
+    });
+
     nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        toggle.setAttribute('aria-expanded', 'false');
-        nav.setAttribute('data-open', 'false');
-      });
+      // Navigating away: don't steal focus from the destination page.
+      link.addEventListener('click', () => closeNav());
+    });
+
+    // Escape dismisses the open menu from anywhere inside the header (WCAG 2.1.1).
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      closeNav({ refocus: true });
     });
   }
 }
