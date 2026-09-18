@@ -61,6 +61,32 @@ Three non-negotiables, each answering a specific complaint:
 
 **Usage discipline:** Navy/blue dominate. Teal and skyblue are accents. **Olive is a highlighter used on 1–3 words per screen, never a large fill.** Avatar fallback tiles rotate through `--blue`, `--teal`, `--darkteal`, `--navy` (never olive/skyblue).
 
+**Accessibility discipline (added 2026-09-18, WCAG 2.1 AA pass).** No new colours were
+introduced; the tokens above remain the whole palette. Two *aliases* of existing tokens were
+added so the same hue can be used safely as text:
+
+```css
+--teal-text:       var(--darkteal);  /* text on light grounds */
+--focus-ring:      var(--navy);      /* two-tone focus indicator, core */
+--focus-ring-halo: var(--white);     /* two-tone focus indicator, halo */
+```
+
+Rules that follow from measured contrast — do not undo these without re-measuring:
+
+| Token | Safe as text on | NOT safe as text on | Why |
+|---|---|---|---|
+| `--teal` #00a98e | dark grounds only | white / `--offwhite` | 2.97:1 on white — fails 4.5:1. Use `--teal-text` for text; keep `--teal` for borders, badges and dark-ground accents. |
+| `--skyblue` #68ace5 | `--navy`, `--blue`, `--darkteal` | white / `--offwhite` / `--olive` | 2.44:1 on white. Fine in the footer (4.86:1 on `--darkteal`). |
+| `--olive` #d2d857 | — (use as a *fill* behind `--navy` text) | any light ground | Highlighter only, as above. |
+
+The focus indicator is deliberately **two-tone** (`outline` + `box-shadow` halo): no single
+palette colour clears the 3:1 non-text minimum on every ground the site uses, so a navy core
+plus a white halo guarantees one of the two always has contrast (worst case 5.70:1).
+
+Opacity is not a safe dimming tool for text: it composites toward the background and it
+*compounds* with any ancestor's opacity. Where text needed de-emphasis, use a darker token at
+full strength instead.
+
 ### Type system (three tiers — matches parent exactly)
 
 ```css
