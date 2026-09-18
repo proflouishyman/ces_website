@@ -23,9 +23,9 @@
       <span class="site-header__superlabel">SNF Agora · Johns Hopkins</span>
       <span class="site-header__wordmark">Center on Economy and Society</span>
     </a>
-    <nav class="site-header__nav" aria-label="Primary">
+    <nav id="site-header-nav" class="site-header__nav" aria-label="Primary">
       <a class="site-header__link" href="index.html">Home</a>
-      <a class="site-header__link site-header__link--active" href="people.html">Scholars</a>
+      <a class="site-header__link site-header__link--active" href="people.html" aria-current="true">Scholars</a>
       <a class="site-header__link" href="focus-areas.html">Research Pillars</a>
       <a class="site-header__link" href="programs.html">Programs</a>
       <a class="site-header__link" href="media.html">Media</a>
@@ -37,6 +37,7 @@
 </header>
 
 <main id="main">
+  <p class="visually-hidden" id="page-status" role="status" aria-live="polite"></p>
   <div id="person-detail-root">
     <!-- JS-rendered: reads ?id= from the URL, looks up data/people.json, renders .person-profile -->
   </div>
@@ -46,25 +47,25 @@
   <div class="site-footer__inner container">
     <div class="site-footer__brand">Center on Economy and Society</div>
 
-    <div class="site-footer__col">
+    <nav class="site-footer__col" aria-label="Footer: Explore">
       <p class="site-footer__col-head eyebrow eyebrow--sky">Explore</p>
       <a class="site-footer__link" href="people.html">Scholars</a>
       <a class="site-footer__link" href="focus-areas.html">Research Pillars</a>
       <a class="site-footer__link" href="programs.html">Programs</a>
       <a class="site-footer__link" href="media.html">Media</a>
       <a class="site-footer__link" href="about.html">About</a>
-    </div>
+    </nav>
 
-    <div class="site-footer__col">
+    <nav class="site-footer__col" aria-label="Footer: Get Involved">
       <p class="site-footer__col-head eyebrow eyebrow--sky">Get Involved</p>
       <a class="site-footer__link" href="programs.html#opportunities">Opportunities</a>
       <a class="site-footer__link" href="index.html#publications">Recent Work</a>
-    </div>
+    </nav>
 
-    <div class="site-footer__col">
+    <nav class="site-footer__col" aria-label="Footer: Stay Connected">
       <p class="site-footer__col-head eyebrow eyebrow--sky">Stay Connected</p>
-      <a class="site-footer__link site-footer__link--cta" id="footer-newsletter-link" href="https://forms.gle/REPLACE-WITH-YOUR-GOOGLE-FORM-URL" target="_blank" rel="noopener">Join our mailing list →</a>
-    </div>
+      <a class="site-footer__link site-footer__link--cta" id="footer-newsletter-link" href="https://forms.gle/REPLACE-WITH-YOUR-GOOGLE-FORM-URL" target="_blank" rel="noopener">Join our mailing list →<span class="visually-hidden"> (opens in a new tab)</span></a>
+    </nav>
 
     <p class="site-footer__attribution">The Center on Economy and Society is part of the <a class="site-footer__attribution-link" href="https://snfagora.jhu.edu">SNF Agora Institute at Johns Hopkins University</a>. 3100 Wyman Park Dr, Baltimore, MD 21218. Funded by the William and Flora Hewlett Foundation and Omidyar Network.</p>
     <p class="site-footer__legal">© 2026 Center on Economy and Society.</p>
