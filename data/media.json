@@ -164,6 +164,16 @@
   ],
   "press": [
     {
+      "title": "Da ALCA aos minerais críticos: Lula e os 21 anos de uma guerra invisível pela soberania do Brasil, por Reynaldo Aragon",
+      "url": "https://jornalggn.com.br/artigos/lula-e-os-21-anos-de-guerra-pela-soberania-por-reynaldo-aragon/",
+      "source": "Jornal GGN",
+      "date": "2026-09-25",
+      "scholar_ids": [
+        "henry-farrell"
+      ],
+      "featured": false
+    },
+    {
       "title": "Runtime: The father of Java on the art of code",
       "url": "https://www.thestack.technology/runtime-the-father-of-java-on-the-art-of-code/",
       "source": "The Stack",
@@ -512,6 +522,13 @@
   ],
   "substack_posts": [
     {
+      "title": "Adaptive Industrial Policy",
+      "url": "https://polytunity.substack.com/p/adaptive-industrial-policy",
+      "date": "2026-09-26",
+      "scholar_id": "yuen-yuen-ang",
+      "newsletter": "Polytunity"
+    },
+    {
       "title": "Machine god metaphors eat your brain",
       "url": "https://www.programmablemutter.com/p/machine-god-metaphors-eat-your-brain",
       "date": "2026-09-22",
@@ -564,13 +581,6 @@
       "title": "World Economic Forum: Time to Retire \"Polycrisis\" for \"Polytunity\"",
       "url": "https://polytunity.substack.com/p/from-polycrisis-to-polytunity-the-future-of-geopolitics",
       "date": "2026-08-20",
-      "scholar_id": "yuen-yuen-ang",
-      "newsletter": "Polytunity"
-    },
-    {
-      "title": "Why Polytunity Matters for ASEAN",
-      "url": "https://polytunity.substack.com/p/asean-polytunity-changing-global-order",
-      "date": "2026-08-12",
       "scholar_id": "yuen-yuen-ang",
       "newsletter": "Polytunity"
     },
