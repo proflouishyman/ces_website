@@ -164,6 +164,17 @@
   ],
   "press": [
     {
+      "title": "Viewpoint diversity initiatives at Hopkins spark academic debate",
+      "url": "https://www.jhunewsletter.com/article/2026/09/viewpoint-diversity-initiatives-at-hopkins-spark-academic-debate",
+      "source": "The Johns Hopkins News-Letter",
+      "date": "2026-09-30",
+      "scholar_ids": [
+        "steven-teles",
+        "jeanne-marie-jackson"
+      ],
+      "featured": false
+    },
+    {
       "title": "Democracy blindsides Silicon Valley’s power players looking to transform the world with AI",
       "url": "http://www.execreview.com/2026/09/democracy-blindsides-silicon-valleys-power-players-looking-to-transform-the-world-with-ai/",
       "source": "ExecReview",
@@ -542,6 +553,13 @@
   ],
   "substack_posts": [
     {
+      "title": "How AI Saved One Professor from Drudgery",
+      "url": "https://computationalhistory.substack.com/p/how-ai-saved-one-professor-from-drudgery",
+      "date": "2026-09-30",
+      "scholar_id": "louis-hyman",
+      "newsletter": "Computational History"
+    },
+    {
       "title": "Adaptive Industrial Policy",
       "url": "https://polytunity.substack.com/p/adaptive-industrial-policy",
       "date": "2026-09-26",
@@ -603,13 +621,6 @@
       "date": "2026-08-20",
       "scholar_id": "yuen-yuen-ang",
       "newsletter": "Polytunity"
-    },
-    {
-      "title": "The Experimental Method in History: continuous batching with oMLX and vLLM",
-      "url": "https://computationalhistory.substack.com/p/the-experimental-method-in-history",
-      "date": "2026-08-04",
-      "scholar_id": "louis-hyman",
-      "newsletter": "Computational History"
     },
     {
       "title": "Confronting Peasants",
