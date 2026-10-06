@@ -164,6 +164,16 @@
   ],
   "press": [
     {
+      "title": "Kampanye Antikorupsi China Meluas, Birokrasi dan Sektor Swasta Hadapi Tantangan",
+      "url": "https://www.tribunnews.com/internasional/7892853/kampanye-antikorupsi-china-meluas-birokrasi-dan-sektor-swasta-hadapi-tantangan",
+      "source": "Tribunnews.com",
+      "date": "2026-10-06",
+      "scholar_ids": [
+        "yuen-yuen-ang"
+      ],
+      "featured": false
+    },
+    {
       "title": "Substack: Don’t Panic",
       "url": "https://madisonian.net/2026/10/04/substack-dont-panic/",
       "source": "Madisonian",
@@ -563,6 +573,20 @@
   ],
   "substack_posts": [
     {
+      "title": "Just One More Turn",
+      "url": "https://computationalhistory.substack.com/p/just-one-more-turn",
+      "date": "2026-10-05",
+      "scholar_id": "louis-hyman",
+      "newsletter": "Computational History"
+    },
+    {
+      "title": "Who Gets to Explain Development?",
+      "url": "https://polytunity.substack.com/p/who-gets-to-explain-development",
+      "date": "2026-10-05",
+      "scholar_id": "yuen-yuen-ang",
+      "newsletter": "Polytunity"
+    },
+    {
       "title": "Can Directed Improvisation Travel Beyond China?",
       "url": "https://polytunity.substack.com/p/directed-improvisation-beyond-china-rodrik-qa",
       "date": "2026-10-02",
@@ -605,13 +629,6 @@
       "newsletter": "Programmable Mutter"
     },
     {
-      "title": "AIM: Adaptive, Inclusive & Moral Political Economy",
-      "url": "https://polytunity.substack.com/p/aim-adaptive-inclusive-and-moral",
-      "date": "2026-09-12",
-      "scholar_id": "yuen-yuen-ang",
-      "newsletter": "Polytunity"
-    },
-    {
       "title": "Against the Cliché: Or Disciplines Under Pressure",
       "url": "https://johnhandel.substack.com/p/against-the-cliche-or-disciplines",
       "date": "2026-08-31",
@@ -622,13 +639,6 @@
       "title": "AI and History Conference",
       "url": "https://computationalhistory.substack.com/p/ai-and-history-conference",
       "date": "2026-08-25",
-      "scholar_id": "louis-hyman",
-      "newsletter": "Computational History"
-    },
-    {
-      "title": "AI in the Archive: Saving Time by Turning Photos into Structured Metadata",
-      "url": "https://computationalhistory.substack.com/p/ai-in-the-archive-saving-time-by",
-      "date": "2026-08-24",
       "scholar_id": "louis-hyman",
       "newsletter": "Computational History"
     },
