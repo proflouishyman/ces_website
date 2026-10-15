@@ -164,6 +164,16 @@
   ],
   "press": [
     {
+      "title": "Europa á sombra dos imperios",
+      "url": "https://praza.gal/opinion/europa-a-sombra-dos-imperios",
+      "source": "The next newspaper of Galicia",
+      "date": "2026-10-15",
+      "scholar_ids": [
+        "henry-farrell"
+      ],
+      "featured": false
+    },
+    {
       "title": "Die AfD ist Donald Trumps Rammbock in Europa",
       "url": "https://www.n-tv.de/politik/Die-EU-sollte-abgeschafft-werden-Die-AfD-ist-Donald-Trumps-Rammbock-in-Europa-id31400100.html",
       "source": "n-tv",
@@ -603,6 +613,13 @@
   ],
   "substack_posts": [
     {
+      "title": "The Pundit’s Trilemma",
+      "url": "https://www.programmablemutter.com/p/the-pundits-trilemma",
+      "date": "2026-10-13",
+      "scholar_id": "henry-farrell",
+      "newsletter": "Programmable Mutter"
+    },
+    {
       "title": "AIM: The Gen-Z Series",
       "url": "https://polytunity.substack.com/p/gen-z-series-applying-aim",
       "date": "2026-10-08",
@@ -648,13 +665,6 @@
       "title": "Machine god metaphors eat your brain",
       "url": "https://www.programmablemutter.com/p/machine-god-metaphors-eat-your-brain",
       "date": "2026-09-22",
-      "scholar_id": "henry-farrell",
-      "newsletter": "Programmable Mutter"
-    },
-    {
-      "title": "International relations has a problem with the future",
-      "url": "https://www.programmablemutter.com/p/international-relations-has-a-problem",
-      "date": "2026-09-20",
       "scholar_id": "henry-farrell",
       "newsletter": "Programmable Mutter"
     },
