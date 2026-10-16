@@ -164,6 +164,16 @@
   ],
   "press": [
     {
+      "title": "Who gets to have 'good debt'? A sociologist, theologian, philosopher and other experts weigh in",
+      "url": "https://www.cnbc.com/2026/10/15/good-debt-access.html",
+      "source": "CNBC",
+      "date": "2026-10-15",
+      "scholar_ids": [
+        "louis-hyman"
+      ],
+      "featured": false
+    },
+    {
       "title": "Europa á sombra dos imperios",
       "url": "https://praza.gal/opinion/europa-a-sombra-dos-imperios",
       "source": "The next newspaper of Galicia",
@@ -613,6 +623,13 @@
   ],
   "substack_posts": [
     {
+      "title": "The Stew That Korea Almost Renamed",
+      "url": "https://polytunity.substack.com/p/budaejjigae-coevolutionary-development",
+      "date": "2026-10-15",
+      "scholar_id": "yuen-yuen-ang",
+      "newsletter": "Polytunity"
+    },
+    {
       "title": "The Pundit’s Trilemma",
       "url": "https://www.programmablemutter.com/p/the-pundits-trilemma",
       "date": "2026-10-13",
@@ -637,13 +654,6 @@
       "title": "Who Gets to Explain Development?",
       "url": "https://polytunity.substack.com/p/who-gets-to-explain-development",
       "date": "2026-10-05",
-      "scholar_id": "yuen-yuen-ang",
-      "newsletter": "Polytunity"
-    },
-    {
-      "title": "Can Directed Improvisation Travel Beyond China?",
-      "url": "https://polytunity.substack.com/p/directed-improvisation-beyond-china-rodrik-qa",
-      "date": "2026-10-02",
       "scholar_id": "yuen-yuen-ang",
       "newsletter": "Polytunity"
     },
