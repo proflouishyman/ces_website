@@ -164,6 +164,26 @@
   ],
   "press": [
     {
+      "title": "The Road to Serfdom Runs Through Both Parties",
+      "url": "https://www.freedomsphoenix.com/News/402864-2026-10-20-the-road-to-serfdom-runs-through-both-parties.htm",
+      "source": "Declare Your Independence with Ernest Hancock",
+      "date": "2026-10-20",
+      "scholar_ids": [
+        "henry-farrell"
+      ],
+      "featured": false
+    },
+    {
+      "title": "Iran-US war widens and other geopolitical stories to know",
+      "url": "https://www.europesays.com/conflicts/44457/",
+      "source": "EUROPE SAYS",
+      "date": "2026-10-20",
+      "scholar_ids": [
+        "yuen-yuen-ang"
+      ],
+      "featured": false
+    },
+    {
       "title": "The origins of \"good debt\" / The role of debt in America today (CNBC video clips)",
       "url": "https://www.cnbc.com/video/2026/10/19/the-origins-of-good-debt.html",
       "source": "CNBC",
@@ -643,6 +663,13 @@
   ],
   "substack_posts": [
     {
+      "title": "The chokepoint view has a massive blind spot",
+      "url": "https://www.programmablemutter.com/p/the-chokepoint-view-has-a-massive",
+      "date": "2026-10-20",
+      "scholar_id": "henry-farrell",
+      "newsletter": "Programmable Mutter"
+    },
+    {
       "title": "The Stew That Korea Almost Renamed",
       "url": "https://polytunity.substack.com/p/budaejjigae-coevolutionary-development",
       "date": "2026-10-15",
@@ -690,13 +717,6 @@
       "date": "2026-09-30",
       "scholar_id": "louis-hyman",
       "newsletter": "Computational History"
-    },
-    {
-      "title": "Machine god metaphors eat your brain",
-      "url": "https://www.programmablemutter.com/p/machine-god-metaphors-eat-your-brain",
-      "date": "2026-09-22",
-      "scholar_id": "henry-farrell",
-      "newsletter": "Programmable Mutter"
     },
     {
       "title": "Against the Cliché: Or Disciplines Under Pressure",
