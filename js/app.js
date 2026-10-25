@@ -1,4 +1,4 @@
-// Center on Economy and Society — app.js
+// Center for Economy and Society — app.js
 // Vanilla JS, no build step, no framework. Fetches data/people.json and
 // data/site-content.json (relative paths) and renders whichever data-driven
 // section(s) are present on the current page. Each real HTML page includes
@@ -318,7 +318,7 @@ function buildPersonDetail() {
     return;
   }
 
-  document.title = `${p.name} | Center on Economy and Society`;
+  document.title = `${p.name} | Center for Economy and Society`;
 
   const focusTags = (p.topics || []).map(t => `<span class="tag tag--focus">${escHtml(t)}</span>`).join('');
 
@@ -335,7 +335,7 @@ function buildPersonDetail() {
           ${avatarHtml(p, 'avatar--lg')}
         </div>
         <div class="person-hero__identity">
-          <p class="person-hero__eyebrow eyebrow eyebrow--teal">${escHtml(roleLabel(p.role))} · Center on Economy and Society</p>
+          <p class="person-hero__eyebrow eyebrow eyebrow--teal">${escHtml(roleLabel(p.role))} · Center for Economy and Society</p>
           <h1 class="person-hero__name">${escHtml(p.name)}</h1>
           <p class="person-hero__title">${escHtml([p.title, p.institution].filter(Boolean).join(' · '))}</p>
           <div class="person-hero__tags">${focusTags}</div>

@@ -1,4 +1,4 @@
-# Center on Economy and Society — Website
+# Center for Economy and Society — Website
 
 **Live site:** https://proflouishyman.github.io/ces_website/
 

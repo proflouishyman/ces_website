@@ -1,4 +1,4 @@
-# Center on Economy and Society — Design Specification
+# Center for Economy and Society — Design Specification
 
 **Version:** 2.0 (data-grounded revision)
 **Purpose:** Binding design contract for a new, free-standing CES website. Every CSS class name below is a fixed contract; downstream build agents implement these verbatim.
@@ -25,7 +25,7 @@ Three non-negotiables, each answering a specific complaint:
 
 | Fact | Value | Source |
 |---|---|---|
-| Canonical name | **Center on Economy and Society** | `centers.json#ces-jhu.name` |
+| Canonical name | **Center for Economy and Society** | `centers.json#ces-jhu.name` |
 | Permitted short mark | **CES** (never invent "+"-style variants) | — |
 | Parent | SNF Agora Institute at Johns Hopkins University | `connected_networks` |
 | Established | **2022** | `year_established` |
@@ -206,7 +206,7 @@ Per site-owner feedback, the site is **seven separate HTML documents**, not one 
 All seven pages share identical header/footer markup (copied verbatim into each file — see README.md's maintenance notes for the tradeoff) and load the same `css/style.css` and `js/app.js`. `js/app.js` detects which page it's on by checking for that page's root element (`#person-grid`, `#person-detail-root`, `#focus-grid`, `#talks-list`, etc.) and only renders the matching section(s); there is no client-side router and no `hashchange` listener.
 
 ### 3.13 `.site-footer` — SNF Agora text attribution (do NOT redesign JHU shield)
-Dark-teal. `__inner`, `__brand` ("Center on Economy and Society"), `__col` (`__col-head` sky eyebrow + `__link`), **`__attribution`** (required plain text: names "SNF Agora Institute at Johns Hopkins University" + `__attribution-link` → `https://snfagora.jhu.edu`, address "3100 Wyman Park Dr, Baltimore, MD 21218", funding "William and Flora Hewlett Foundation and Omidyar Network"), `__legal` (© line). **Text-and-link credit only; no shield reproduction or modification.**
+Dark-teal. `__inner`, `__brand` ("Center for Economy and Society"), `__col` (`__col-head` sky eyebrow + `__link`), **`__attribution`** (required plain text: names "SNF Agora Institute at Johns Hopkins University" + `__attribution-link` → `https://snfagora.jhu.edu`, address "3100 Wyman Park Dr, Baltimore, MD 21218", funding "William and Flora Hewlett Foundation and Omidyar Network"), `__legal` (© line). **Text-and-link credit only; no shield reproduction or modification.**
 
 ---
 
