@@ -164,6 +164,26 @@
   ],
   "press": [
     {
+      "title": "China’s Belt and Road hasn’t lived up to Xi’s promise",
+      "url": "https://asiatimes.com/2026/10/chinas-belt-and-road-hasnt-lived-up-to-xis-promise/",
+      "source": "Asia Times",
+      "date": "2026-10-29",
+      "scholar_ids": [
+        "yuen-yuen-ang"
+      ],
+      "featured": false
+    },
+    {
+      "title": "The Century-Long Campaign To Sell Americans on the Free Market",
+      "url": "https://nextcity.org/features/the-century-long-campaign-to-sell-americans-on-the-free-market",
+      "source": "Next City",
+      "date": "2026-10-28",
+      "scholar_ids": [
+        "angus-burgin"
+      ],
+      "featured": false
+    },
+    {
       "title": "Lecture: Jeanne-Marie Jackson",
       "url": "https://calendar.uga.edu/event/lecture-jeanne-marie-jackson",
       "source": "University of Georgia",
@@ -703,6 +723,13 @@
   ],
   "substack_posts": [
     {
+      "title": "AI being great at math makes human mathematicians more valuable, not less",
+      "url": "https://www.programmablemutter.com/p/ai-being-great-at-math-makes-human",
+      "date": "2026-10-28",
+      "scholar_id": "henry-farrell",
+      "newsletter": "Programmable Mutter"
+    },
+    {
       "title": "Floating Classrooms in a Sinking World",
       "url": "https://polytunity.substack.com/p/floating-classrooms-in-a-sinking-world",
       "date": "2026-10-23",
@@ -743,13 +770,6 @@
       "date": "2026-10-05",
       "scholar_id": "louis-hyman",
       "newsletter": "Computational History"
-    },
-    {
-      "title": "What AI debates have to do with alchemy",
-      "url": "https://www.programmablemutter.com/p/what-ai-debates-have-to-do-with-alchemy",
-      "date": "2026-10-02",
-      "scholar_id": "henry-farrell",
-      "newsletter": "Programmable Mutter"
     },
     {
       "title": "How AI Saved One Professor from Drudgery",
