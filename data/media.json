@@ -164,6 +164,16 @@
   ],
   "press": [
     {
+      "title": "To watch and watch for: Week of Nov. 8",
+      "url": "https://www.jhunewsletter.com/article/2026/11/to-watch-and-watch-for-week-of-nov-8",
+      "source": "The Johns Hopkins News-Letter",
+      "date": "2026-11-08",
+      "scholar_ids": [
+        "jeanne-marie-jackson"
+      ],
+      "featured": false
+    },
+    {
       "title": "New political science professor offers expertise in public policy, inequality",
       "url": "https://socialsciences.uoregon.edu/news/new-political-science-professor-offers-expertise-public-policy-inequality",
       "source": "Oregon News",
@@ -733,6 +743,13 @@
   ],
   "substack_posts": [
     {
+      "title": "Stage before Script: Directed Improvisation in Yiwu",
+      "url": "https://polytunity.substack.com/p/yiwu-directed-improvisation",
+      "date": "2026-11-08",
+      "scholar_id": "yuen-yuen-ang",
+      "newsletter": "Polytunity"
+    },
+    {
       "title": "The foreign policy “Blob” exists",
       "url": "https://www.programmablemutter.com/p/the-foreign-policy-blob-exists",
       "date": "2026-11-01",
@@ -764,13 +781,6 @@
       "title": "Floating Classrooms in a Sinking World",
       "url": "https://polytunity.substack.com/p/floating-classrooms-in-a-sinking-world",
       "date": "2026-10-23",
-      "scholar_id": "yuen-yuen-ang",
-      "newsletter": "Polytunity"
-    },
-    {
-      "title": "The Stew That Korea Almost Renamed",
-      "url": "https://polytunity.substack.com/p/budaejjigae-coevolutionary-development",
-      "date": "2026-10-15",
       "scholar_id": "yuen-yuen-ang",
       "newsletter": "Polytunity"
     },
