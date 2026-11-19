@@ -164,6 +164,46 @@
   ],
   "press": [
     {
+      "title": "中美俄「三巨頭」坐在了一起，世界正滑向大國共管嗎？",
+      "url": "https://www.bbc.com/zhongwen/articles/cvglr9r243x6o/trad",
+      "source": "BBC",
+      "date": "2026-11-18",
+      "scholar_ids": [
+        "yuen-yuen-ang"
+      ],
+      "featured": false
+    },
+    {
+      "title": "‘No one asked for this’: AI is being pushed on people—and they’re sick of it",
+      "url": "https://www.fastcompany.com/91644146/no-one-asked-for-this-ai-is-being-pushed-on-people-and-theyre-sick-of-it",
+      "source": "Fast Company",
+      "date": "2026-11-18",
+      "scholar_ids": [
+        "louis-hyman"
+      ],
+      "featured": false
+    },
+    {
+      "title": "Xi Jinping enfrenta una cumbre con tensiones comerciales y un invitado sorpresa",
+      "url": "https://www.infobae.com/america/the-new-york-times/2026/11/18/xi-jinping-enfrenta-una-cumbre-con-tensiones-comerciales-y-un-invitado-sorpresa/",
+      "source": "Infobae",
+      "date": "2026-11-18",
+      "scholar_ids": [
+        "yuen-yuen-ang"
+      ],
+      "featured": false
+    },
+    {
+      "title": "10 Days That Changed the World – The New York Times",
+      "url": "https://drwebdomain.blog/2026/11/18/10-days-that-changed-the-world-the-new-york-times/?share=mastodon",
+      "source": "DrWeb's Domain",
+      "date": "2026-11-18",
+      "scholar_ids": [
+        "henry-farrell"
+      ],
+      "featured": false
+    },
+    {
       "title": "Will a Spy Scandal, Trade Friction and a Surprise Guest Ruin Xi's Big Moment?",
       "url": "https://www.nytimes.com/2026/11/17/world/asia/xi-apec.html",
       "source": "New York Times",
@@ -726,47 +766,6 @@
       "scholar_ids": [
         "glory-m-liu",
         "angus-burgin"
-      ],
-      "featured": false
-    },
-    {
-      "title": "Glenn Loury's Substack previews a TGS Live conversation with Steven Teles",
-      "url": "https://glennloury.substack.com/p/on-the-next-tgs-live-andrew-day-on",
-      "source": "Glenn Loury (Substack)",
-      "date": "2026-07-16",
-      "scholar_ids": [
-        "steven-teles"
-      ],
-      "featured": false
-    },
-    {
-      "title": "RealClearInvestigations piece on Agora's conservative-outreach campaign also names Simon Halliday",
-      "url": "https://www.realclearinvestigations.com/articles/2026/07/15/inside_elite_universitys_campaign_to_bring_conservatives_to_campus_1194546.html",
-      "source": "RealClearInvestigations",
-      "date": "2026-07-15",
-      "scholar_ids": [
-        "simon-halliday",
-        "louis-hyman"
-      ],
-      "featured": false
-    },
-    {
-      "title": "Semafor feature on a Chinese golf-course land seizure quotes Yuen Yuen Ang",
-      "url": "https://www.semafor.com/article/07/14/2026/the-man-who-stole-a-golf-course",
-      "source": "Semafor",
-      "date": "2026-07-14",
-      "scholar_ids": [
-        "yuen-yuen-ang"
-      ],
-      "featured": true
-    },
-    {
-      "title": "Thai-language piece on China's economic recovery quotes Yuen Yuen Ang",
-      "url": "https://brandinside.asia/why-china-economy-is-not-recovering-with-advanced-innovation/",
-      "source": "Brand Inside (Thailand)",
-      "date": "2026-07-10",
-      "scholar_ids": [
-        "yuen-yuen-ang"
       ],
       "featured": false
     }
